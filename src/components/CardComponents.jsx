@@ -16,24 +16,16 @@ import PropTypes from "prop-types";
 const CardComponent = ({
   id,
   title,
-  subTitle,
+
   description,
-  phone,
+  idUser,
   img,
-  web,
-  state,
-  country,
-  city,
-  street,
-  email,
-  houseNumber,
-  zipCode,
+  price,
   bizNumber,
   onClick,
   onEdit,
   onDelete,
   onFavorites,
-  idUser,
   likes,
   canEdit,
   canUser,
@@ -63,16 +55,11 @@ const CardComponent = ({
           {title}
         </Typography>
         <Divider />
+
         <Typography variant="body2" color="text.secondary">
-          {subTitle}
+          {"Price: "} {price}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {"Phone: "} {phone}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {"Address: "}
-          {country} {city} {street} {houseNumber}
-        </Typography>
+
         <Typography variant="body2" color="text.secondary">
           {"Card Number: "}
           {bizNumber}
@@ -122,10 +109,6 @@ const CardComponent = ({
                 borderRadius: "5px",
               }}
             >
-              <Typography variant="h6" gutterBottom>
-                Call Us {phone}
-              </Typography>
-
               <Button variant="contained" onClick={handleCloseCallWindow}>
                 Close
               </Button>
@@ -141,22 +124,14 @@ CardComponent.propTypes = {
   id: PropTypes.string,
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string.isRequired,
+
   description: PropTypes.string.isRequired,
   onDelete: PropTypes.func,
   onClick: PropTypes.func,
   onEdit: PropTypes.func,
   canEdit: PropTypes.bool,
-  phone: PropTypes.string.isRequired,
-  web: PropTypes.string,
-  state: PropTypes.string,
-  country: PropTypes.string.isRequired,
-  city: PropTypes.string.isRequired,
-  street: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  houseNumber: PropTypes.string.isRequired,
-  zipCode: PropTypes.number,
-  bizNumber: PropTypes.string,
+
+  bizNumber: PropTypes.number,
 };
 
 CardComponent.defaultProps = {

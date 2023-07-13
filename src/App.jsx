@@ -15,10 +15,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import useLoggedIn from "./hooks/useLoggedIn";
 import SimpleBottomNavigation from "./components/Footer1";
+import NameHeader from "./components/header";
 const light = {
   palette: {
     mode: "light",
-    background: { default: "lightBlue", paper: "#fff" },
+    background: { default: "white", paper: "#fff" },
   },
 };
 
@@ -57,10 +58,11 @@ function App() {
         pauseOnHover
         theme="colored"
       />
+      <header>
+        <NameHeader />
+        <ResponsiveAppBar />
+      </header>{" "}
       <Container>
-        <header>
-          <ResponsiveAppBar />
-        </header>
         <main>{isLoading ? <CircularProgress /> : <Router />}</main>
         <footer>
           <SimpleBottomNavigation />

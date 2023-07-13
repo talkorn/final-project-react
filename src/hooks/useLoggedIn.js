@@ -8,6 +8,7 @@ const useLoggedIn = () => {
     try {
       const token = localStorage.getItem("token");
       const payload = jwt_decode(token);
+      console.log("payload", payload);
       const id = payload._id;
       if (!token) {
         return;

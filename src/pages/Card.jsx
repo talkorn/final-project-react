@@ -63,7 +63,7 @@ const CardPage = () => {
     navigate(`/edit/${id}`);
   };
   const addToFavorite = async (id) => {
-    await axios.patch(`/cards/card-like/${id}`);
+    await axios.patch(`/cards/${id}`);
 
     try {
       const { data } = await axios.get("/cards/" + id);
@@ -123,18 +123,19 @@ const CardPage = () => {
           idUser={idUser}
           ids={inputState._id}
           title={inputState.title}
-          subTitle={inputState.subTitle}
+          /* subTitle={inputState.subTitle} */
+          price={inputState.price}
           description={inputState.description}
-          phone={inputState.phone}
+          /*  phone={inputState.phone} */
           img={inputState.url}
           web={inputState.web}
-          state={inputState.state}
+          /* state={inputState.state}
           country={inputState.country}
           city={inputState.city}
           street={inputState.street}
           email={inputState.email}
           houseNumber={inputState.houseNumber}
-          zipCode={inputState.zipCode}
+          zipCode={inputState.zipCode} */
           bizNumber={inputState.bizNumber}
           createdAt={inputState.createdAt}
           onEdit={moveToEditPage}

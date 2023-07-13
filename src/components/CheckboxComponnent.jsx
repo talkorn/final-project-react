@@ -13,8 +13,8 @@ const CheckboxComponnent = () => {
   return (
     <Checkbox
       edge="start"
-      icon={<WbSunnyIcon color="secondary" />}
-      checkedIcon={<ModeNightIcon color="warning" />}
+      icon={<WbSunnyIcon style={{ color: "yellow" }} />}
+      checkedIcon={<ModeNightIcon style={{ color: "grey" }} />}
       checked={isDarkMode}
       onClick={changeMode}
     />

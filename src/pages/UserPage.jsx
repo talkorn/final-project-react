@@ -19,7 +19,7 @@ const UserPage = () => {
     (async () => {
       try {
         let newInputState;
-        const { data } = await axios.get("users/getAllUsers");
+        const { data } = await axios.get("users/");
         if (data) {
           let userInfo = data.users;
           userInfo = userInfo.find((item) => item._id === id);

@@ -44,14 +44,14 @@ const ProfilePage = () => {
         setInputState(newInputState);
         setInitialnputState(newInputState);
       } catch (err) {
-        console.log("error from axios", err);
+        console.log("error from axios", err.response.data);
       }
     })();
   }, []);
   useEffect(() => {
     const joiResponse = validateProfileSchema(inputState);
     setInputsErrorsState(joiResponse);
-    console.log(inputState?.name?.first);
+
     if (
       inputState &&
       !joiResponse &&
@@ -80,16 +80,25 @@ const ProfilePage = () => {
       await axios.put(`users/${id}`, inputState);
       navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("error from axios", err.response);
+      console.log("error from axios", err.response.data);
     }
   };
 
   const handleInputChange = (ev) => {
     const { id, value } = ev.target;
-    const [nestedProperty, nestedKey] = id.split(".");
-
+    console.log(id);
     let newInputState = JSON.parse(JSON.stringify(inputState));
-    newInputState[nestedProperty][nestedKey] = value;
+    if (typeof id === "string" && id.includes(".")) {
+      const [nestedProperty, nestedKey] = id.split(".");
+      newInputState[nestedProperty][nestedKey] = value;
+      console.log(typeof newInputState[nestedProperty][nestedKey]);
+    } else {
+      console.log(" newInputState[id]", newInputState[id]);
+      console.log(" value", value);
+      newInputState[id] = value;
+      console.log(" newInputState.id", newInputState.id);
+      console.log(" newInputState", newInputState);
+    }
 
     setInputState(newInputState);
   };

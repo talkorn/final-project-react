@@ -61,7 +61,7 @@ const MyCardsPage = () => {
   };
 
   const addToFavorite = async (id) => {
-    await axios.patch(`/cards/card-like/${id}`);
+    await axios.patch(`/cards/${id}`);
     try {
       const { data } = await axios.get("/cards/my-cards");
       setCardsArr(data);

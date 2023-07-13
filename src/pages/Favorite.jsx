@@ -20,7 +20,7 @@ const FavoritePage = () => {
     LoggedIn();
 
     axios
-      .get("http://localhost:8181/api/cards/cards")
+      .get("http://localhost:8181/api/cards")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -62,9 +62,9 @@ const FavoritePage = () => {
   };
 
   const addToFavorites = async (id) => {
-    await axios.patch(`/cards/card-like/${id}`);
+    await axios.patch(`/cards/${id}`);
     try {
-      const { data } = await axios.get("/cards/cards");
+      const { data } = await axios.get("/cards");
       setCardsArr(data);
     } catch (err) {
       console.log("Error fetching updated card list", err);
@@ -102,23 +102,13 @@ const FavoritePage = () => {
                   onClick={moveToCardPage}
                   id={item._id}
                   title={item.title}
-                  subTitle={item.subTitle}
                   description={item.description}
-                  phone={item.phone}
+                  phone={item.price}
                   img={item.image.url}
-                  web={item.web}
-                  state={item.state}
-                  country={item.country}
-                  city={item.city}
-                  street={item.street}
-                  email={item.email}
-                  houseNumber={item.houseNumber}
-                  zipCode={item.zipCode}
-                  bizNumber={item.bizNumber}
                   onEdit={moveToEditPage}
                   onDelete={deleteCardFromInitialCardsArr}
                   onFavorites={addToFavorites}
-                  canEdit={payload && (payload.biz || payload.isAdmin)}
+                  canEdit={payload && (payload.isBusiness || payload.isAdmin)}
                   canDelete={payload && payload.isAdmin}
                   canUser={payload && payload._id}
                   cardIdUser={item.user_id}

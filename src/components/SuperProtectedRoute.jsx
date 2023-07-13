@@ -13,7 +13,7 @@ const SuperProtectedRoute = ({ element, isAdmin, isBiz }) => {
     if (isAdmin && payload && payload.isAdmin) {
       return element;
     } else {
-      if (isBiz && payload && payload.biz) {
+      if (isBiz && payload && payload.isBusiness) {
         return element;
       }
     }

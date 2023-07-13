@@ -14,16 +14,17 @@ const ShortTYpographyComponnent = () => {
         sx={{
           mr: 1,
           fontFamily: "monospace",
-          fontWeight: 300,
+          fontWeight: "bold",
           letterSpacing: ".1rem",
-          color: "inherit",
+          color: "black",
           textDecoration: "none",
+          fontSize: "1.5rem",
           "&:hover": {
-            color: "gold",
+            color: "grey",
           },
         }}
       >
-        Tal's Jewelry
+        Home
       </Typography>
     </Fragment>
   );

@@ -23,7 +23,7 @@ const CrmTable = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get("users/getAllUsers");
+        const { data } = await axios.get("users");
         setIntialData(data.users);
       } catch (err) {
         console.log("error from axios", err);
@@ -59,13 +59,13 @@ const CrmTable = () => {
       toast.error("sorry,you cant change this user details");
       return;
     }
-    updatedUser.biz = ev.target.checked;
+    updatedUser.isBusiness = ev.target.checked;
     delete updatedUser._id;
     delete updatedUser.isAdmin;
     try {
       const newData = initialData.map((user) => {
         if (user._id === id) {
-          user.biz = ev.target.checked;
+          user.isBusiness = ev.target.checked;
         }
         return user;
       });

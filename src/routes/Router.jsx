@@ -38,7 +38,6 @@ const Router = () => {
           path={ROUTES.PROFILE}
           element={<ProtectedRoute element={<ProfilePage />} />}
         />
-
         <Route
           path="/edit/:id"
           element={
@@ -51,23 +50,26 @@ const Router = () => {
         />
         <Route
           path={ROUTES.ADDCARD}
+          element={<AddCardPage />}
+
+          /*  <Route
+          path={ROUTES.ADDCARD}
           element={
             <SuperProtectedRoute
               isAdmin={false}
               isBiz={true}
               element={<AddCardPage />}
-            />
-          }
+            /> */
         />
         <Route
           path={ROUTES.MYCARDS}
-          element={
+          element={<MyCardsPage />} /* {
             <SuperProtectedRoute
               isAdmin={false}
               isBiz={true}
-              element={<MyCardsPage />}
-            />
-          }
+              element={<MyCardsPage />} 
+        />
+        }*/
         />
         <Route
           path="/user/:id"

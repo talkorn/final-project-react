@@ -48,7 +48,7 @@ const UserComponent = (userArr) => {
 };
 
 UserComponent.propTypes = {
-  /* description: PropTypes.string.isRequired, */
+  //description: PropTypes.string.isRequired,
   inputStates: PropTypes.object.isRequired,
   onChanges: PropTypes.func,
   inputsErrorsStates: PropTypes.object,

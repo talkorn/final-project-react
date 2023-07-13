@@ -21,6 +21,7 @@ import UserComponent from "../components/UserComponent";
 import Stack from "@mui/material/Stack";
 import CardMedia from "@mui/material/CardMedia";
 import validateEditSchema from "../validation/editValidation";
+import validateEditCardSchema from "../validation/cardValidation.js";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { toast } from "react-toastify";
@@ -32,40 +33,48 @@ const CardPage = () => {
   const [buttonValid, setButtonValid] = useState(false);
   const initialCard = {
     title: "",
-    subTitle: "",
+    /*  subTitle: "", */
     description: "",
-    phone: "",
+    price: "",
+    /*  phone: "",
     email: "",
-    web: "",
-    url: "https://cdn.pixabay.com/photo/2017/11/10/05/24/add-2935429_1280.png",
+    web: "", */
+    image: {
+      url: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
 
-    alt: "",
-    state: "",
+      alt: "gjj",
+    },
+    /*  state: "",
     country: "",
     city: "",
     street: "",
     houseNumber: "",
-    zipCode: "",
+    zipCode: "", */
   };
   const [inputState, setInputState] = useState(initialCard);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const joiResponse = validateEditSchema(inputState);
+    console.log(inputState);
+    const joiResponse = validateEditCardSchema(inputState);
+    console.log("joiResponse", joiResponse);
     setInputsErrorsState(joiResponse);
     if (
       inputState &&
-      !joiResponse &&
+      /* !joiResponse &&
       inputState.title &&
-      inputState.subTitle &&
-      inputState.phone &&
+      inputState.price &&
+      inputState.image.url && */
+      //inputState.image.alt &&
+      /*  inputState.subTitle &&
+      inputState.phone && 
       inputState.country &&
       inputState.email &&
       inputState.web &&
       inputState.city &&
       inputState.street &&
-      inputState.houseNumber &&
+      inputState.houseNumber &&*/
       inputState.description
     ) {
       setButtonValid(true);
@@ -74,23 +83,39 @@ const CardPage = () => {
     }
   }, [inputState]);
   const handleSubmit = async (event) => {
+    console.log("hgjyhfjyhf");
     event.preventDefault();
     try {
       if (inputsErrorsState) {
+        console.log("inputsErrorsState", inputsErrorsState);
         return;
       }
+      console.log(inputState);
       await axios.post("/cards/", inputState);
       toast.success("Great! a new Business Card has been created");
 
-      navigate(ROUTES.MYCARDS);
+      //navigate(ROUTES.MYCARDS);
     } catch (err) {
-      console.log("error from axios", err.response.data);
+      console.log("error from axios", err);
       toast.error(err.response.data);
     }
   };
   const handleInputChange = (ev) => {
+    const { id, value } = ev.target;
     let newInputState = JSON.parse(JSON.stringify(inputState));
-    newInputState[ev.target.id] = ev.target.value;
+    if (typeof id === "string" && id.includes(".")) {
+      const [nestedProperty, nestedKey] = id.split(".");
+      newInputState[nestedProperty][nestedKey] = value;
+      console.log(typeof newInputState[nestedProperty][nestedKey]);
+    } else {
+      console.log(" newInputState[id]", newInputState[id]);
+      console.log(" value", value);
+      newInputState[id] = value;
+      console.log(" newInputState.id", newInputState.id);
+      console.log(" newInputState", newInputState);
+    }
+    /*  let newInputState = JSON.parse(JSON.stringify(inputState));
+    newInputState[ev.target.id] = ev.target.value; */
     setInputState(newInputState);
   };
   const resetButton = () => {
@@ -124,26 +149,21 @@ const CardPage = () => {
         <CardMedia
           component="img"
           sx={{ height: 140 }}
-          image={inputState.url}
-          title={inputState.title}
+          image={inputState.image.url}
+          title={inputState.image.alt}
         />{" "}
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {[
               { description: "title", required: true },
-              { description: "subTitle", required: true },
+
               { description: "description", required: true },
-              { description: "phone", required: true },
-              { description: "email", required: true },
-              { description: "web", required: true },
-              { description: "url", required: false },
-              { description: "alt", required: false },
-              { description: "state", required: false },
-              { description: "country", required: true },
-              { description: "city", required: true },
-              { description: "street", required: true },
-              { description: "houseNumber", required: true },
-              { description: "zipCode", required: false },
+
+              { description: "image.url", required: false },
+              { description: "image.alt", required: false },
+              //{ description: "image.alt", required: false },
+
+              { description: "price", required: true },
             ].map((props, index) => (
               <Grid item xs={12} sm={6} key={index}>
                 <UserComponent

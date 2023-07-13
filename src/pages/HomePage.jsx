@@ -58,9 +58,9 @@ const HomePage = () => {
   };
 
   const addToFavorite = async (id) => {
-    await axios.patch(`/cards/card-like/${id}`);
+    await axios.patch(`/cards/${id}`);
     try {
-      const { data } = await axios.get("http://localhost:8181/api/cards/cards");
+      const { data } = await axios.get("http://localhost:8181/api/cards");
       setCardsArr(data);
     } catch (err) {
       console.log("Error fetching updated card list", err);
@@ -95,7 +95,7 @@ const HomePage = () => {
               title={item.title}
               subTitle={item.subTitle}
               description={item.description}
-              phone={item.phone}
+              price={item.price}
               img={item.image.url}
               web={item.web}
               state={item.state}
@@ -109,7 +109,7 @@ const HomePage = () => {
               onEdit={moveToEditPage}
               onDelete={deleteCardFromInitialCardsArr}
               onFavorites={addToFavorite}
-              canEdit={payload && (payload.biz || payload.isAdmin)}
+              canEdit={payload && (payload.isBusiness || payload.isAdmin)}
               canDelete={payload && payload.isAdmin}
               canUser={payload && payload._id}
             />

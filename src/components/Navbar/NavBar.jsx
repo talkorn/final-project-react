@@ -47,29 +47,29 @@ function ResponsiveAppBar() {
     toast.success("You've been signed out");
   };
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <CheckboxComponnent /> <ShortTYpographyComponnent />
+          <CheckboxComponnent style={{ color: "black" }} />{" "}
+          <ShortTYpographyComponnent />
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            {/* <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="white"
+            ></IconButton> */}
             <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
-            ></IconButton>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon style={{ color: "black" }} />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -93,7 +93,7 @@ function ResponsiveAppBar() {
                 key={ROUTES.ABOUT}
                 url={ROUTES.ABOUT}
                 label="About"
-                onClick={handleCloseNavMenu}
+                /* onClick={handleCloseNavMenu} */
               />
               {isLoggedIn && (
                 <NavLinkComponent
@@ -103,7 +103,7 @@ function ResponsiveAppBar() {
                   onClick={handleCloseNavMenu}
                 />
               )}
-              {payload && (payload.isAdmin || payload.biz) && (
+              {payload && (payload.isAdmin || payload.isBusiness) && (
                 <NavLinkComponent
                   key={ROUTES.SANDBOX}
                   url={ROUTES.SANDBOX}
@@ -111,7 +111,7 @@ function ResponsiveAppBar() {
                   onClick={handleCloseNavMenu}
                 />
               )}
-              {payload && payload.biz && (
+              {payload && payload.isBusiness && (
                 <NavLinkComponent
                   key={ROUTES.MYCARDS}
                   url={ROUTES.MYCARDS}
@@ -131,9 +131,13 @@ function ResponsiveAppBar() {
                 ? authedPages.map((settings) =>
                     settings.url === ROUTES.LOGOUT ? (
                       <MenuItem key={settings.url}>
-                        <Link to={settings.url} onClick={logoutClick}>
+                        <Link
+                          to={settings.url}
+                          onClick={logoutClick}
+                          style={{ textDecoration: "none" }}
+                        >
                           <Typography
-                            sx={{ textDecoration: "none", color: "pink" }}
+                            sx={{ textDecoration: "none", color: "black" }}
                           >
                             {settings.label}
                           </Typography>
@@ -141,9 +145,13 @@ function ResponsiveAppBar() {
                       </MenuItem>
                     ) : (
                       <MenuItem key={settings.url}>
-                        <Link to={settings.url} onClick={handleCloseNavMenu}>
+                        <Link
+                          to={settings.url}
+                          onClick={handleCloseNavMenu}
+                          style={{ textDecoration: "none" }}
+                        >
                           <Typography
-                            sx={{ textDecoration: "none", color: "pink" }}
+                            sx={{ textDecoration: "none", color: "black" }}
                           >
                             {settings.label}
                           </Typography>
@@ -161,10 +169,10 @@ function ResponsiveAppBar() {
             {isLoggedIn && (
               <NavLinkComponent url={ROUTES.FAVCARDS} label="Favorite" />
             )}
-            {payload && (payload.isAdmin || payload.biz) && (
+            {payload && (payload.isAdmin || payload.isBusiness) && (
               <NavLinkComponent url={ROUTES.SANDBOX} label="Sandbox" />
             )}
-            {payload && payload.biz && (
+            {payload && payload.isBusiness && (
               <NavLinkComponent url={ROUTES.MYCARDS} label="MY Cards" />
             )}
             {payload && payload.isAdmin && (
