@@ -22,7 +22,7 @@ const signUpSchema = Joi.object({
   street: Joi.string().min(2).max(256).required(),
   houseNumber: Joi.string().min(1).max(256).required(),
   zipCode: Joi.number().min(0).max(99999999999).allow(""),
-  biz: Joi.boolean(),
+  isBusiness: Joi.boolean(),
 });
 const validateSignUpSchema = (userInput) => validation(signUpSchema, userInput);
 export default validateSignUpSchema;

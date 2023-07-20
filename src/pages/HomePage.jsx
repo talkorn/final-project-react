@@ -8,6 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useQueryParams from "../hooks/useQueryParam.js";
 import filterFunction from "../utilis/filterFunc.js";
 import { toast } from "react-toastify";
+import Slideshow from "../components/SlideComponenet";
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
@@ -80,13 +81,15 @@ const HomePage = () => {
   return (
     <Box>
       <CssBaseline />
-      <h1>Cards Page</h1>
-      <h2>Here You Can Find All Our Buisness Cards</h2>
-      <Grid container spacing={2}>
+      <h1>Welcome To Tal's Jewelry</h1>
+      <h2>Here You Can Find Our Uniqe and Hand Made Jewelry</h2>
+      <Slideshow />
+      <Grid container spacing={1}>
         {cardsArr.map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item._id + Date.now()}>
             {" "}
             <CardComponent
+              category={item.category}
               likes={item.likes}
               idUser={idUser}
               cardIdUser={item.user_id}

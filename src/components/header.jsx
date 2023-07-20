@@ -10,7 +10,7 @@ const NameHeader = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-        backgroundColor: "black",
+        backgroundColor: "white",
         "&:hover": {
           color: "black",
         },
@@ -20,16 +20,17 @@ const NameHeader = () => {
           variant="h4"
           component="div"
           style={{
-            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
-            fontFamily: "monospace",
+            /*   textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)", */
+            fontFamily: "Pangolin",
             fontWeight: "bold",
             letterSpacing: ".1rem",
-            color: "gold",
+            color: "black",
             fontSize: "3rem",
           }}
         >
           <CardGiftcardIcon />
           Tal's Jewelry
+          <div style={{ fontSize: "1rem" }}>*RAMAT HASHARON-HANEVEEM*</div>
         </Typography>
       }
     />

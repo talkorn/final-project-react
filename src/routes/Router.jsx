@@ -9,6 +9,9 @@ import EditPage from "../pages/EditPage";
 import FavoritePage from "../pages/Favorite";
 import AddCardPage from "../pages/AddCard";
 import MyCardsPage from "../pages/MyCards";
+import NecklacesPage from "../pages/NecklacesPage";
+import EarringsPage from "../pages/EarringsPage";
+import BraceletsPage from "../pages/BraceletPage";
 import SuperProtectedRoute from "../components/SuperProtectedRoute";
 import SandBoxPage from "../pages/SandBoxPage";
 import NestedPage1 from "../pages/NestesPage1";
@@ -26,6 +29,9 @@ const Router = () => {
       <Routes>
         <Route path={ROUTES.HOME} element={<HomePage />} />
         <Route path={ROUTES.ABOUT} element={<AboutPage />} />
+        <Route path={ROUTES.NECKLACES} element={<NecklacesPage />} />
+        <Route path={ROUTES.EARRINGS} element={<EarringsPage />} />
+        <Route path={ROUTES.BRACELETS} element={<BraceletsPage />} />
         <Route path={ROUTES.SIGNUP} element={<SignUpPage />} />
         <Route path="/card/:id" element={<CardPage />} />
         <Route

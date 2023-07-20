@@ -54,13 +54,13 @@ function ResponsiveAppBar() {
           <CheckboxComponnent style={{ color: "black" }} />{" "}
           <ShortTYpographyComponnent />
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            {/* <IconButton
+            {/*  <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="white"
+              color="black"
             ></IconButton> */}
             <IconButton
               size="large"
@@ -93,6 +93,24 @@ function ResponsiveAppBar() {
                 key={ROUTES.ABOUT}
                 url={ROUTES.ABOUT}
                 label="About"
+                /* onClick={handleCloseNavMenu} */
+              />
+              <NavLinkComponent
+                key={ROUTES.NECKLACES}
+                url={ROUTES.NECKLACES}
+                label="Necklaces"
+                /* onClick={handleCloseNavMenu} */
+              />
+              <NavLinkComponent
+                key={ROUTES.EARRINGS}
+                url={ROUTES.EARRINGS}
+                label="Earrings"
+                /* onClick={handleCloseNavMenu} */
+              />
+              <NavLinkComponent
+                key={ROUTES.BRACELETS}
+                url={ROUTES.BRACELETS}
+                label="Bracelets"
                 /* onClick={handleCloseNavMenu} */
               />
               {isLoggedIn && (
@@ -166,6 +184,9 @@ function ResponsiveAppBar() {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <NavLinkComponent url={ROUTES.ABOUT} label="About" />
+            <NavLinkComponent url={ROUTES.NECKLACES} label="Necklaces" />
+            <NavLinkComponent url={ROUTES.EARRINGS} label="Earrings" />
+            <NavLinkComponent url={ROUTES.BRACELETS} label="Bracelets" />
             {isLoggedIn && (
               <NavLinkComponent url={ROUTES.FAVCARDS} label="Favorite" />
             )}
@@ -198,6 +219,7 @@ function ResponsiveAppBar() {
                 : notAuthPages.map((page) => (
                     <NavLinkComponent key={page.url} {...page} />
                   ))}
+
               <IconButton sx={{ p: 0 }}>
                 <Avatar
                   alt="Remy Sharp"

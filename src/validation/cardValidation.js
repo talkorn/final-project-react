@@ -5,12 +5,13 @@ const editCardSchema = Joi.object({
   title: Joi.string().min(2).max(256).required(),
 
   description: Joi.string().min(2).max(1024).required(),
-  price: Joi.number().min(1).max(256).required(),
+  price: Joi.number().min(1).max(99999999).required(),
+  category: Joi.string().min(1).max(256).required(),
 
   image: Joi.object({
     url: Joi.string().regex(
       new RegExp(
-        /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
+        /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/
       )
     ),
     alt: Joi.string().min(2).max(256).required(),

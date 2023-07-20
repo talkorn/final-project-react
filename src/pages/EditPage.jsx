@@ -13,16 +13,24 @@ import validateIdCardParamsSchema from "../validation/idValidation";
 import { CircularProgress } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import UserComponent from "../components/UserComponent";
+import CardComponent from "../components/CardComponents";
 import Stack from "@mui/material/Stack";
 import CardMedia from "@mui/material/CardMedia";
-import validateEditSchema from "../validation/editValidation";
+/* import validateEditSchema from "../validation/editValidation"; */
+import validateEditCardSchema from "../validation/cardValidation";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import React from "react";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+
 const CardPage = () => {
   const { id } = useParams();
   const [inputsErrorsState, setInputsErrorsState] = useState("");
   const [buttonValid, setButtonValid] = useState(false);
   const [inputState, setInputState] = useState("");
   const [initialnputState, setInitialnputState] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const categories = ["earrings", "necklaces", "bracelets"];
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
@@ -35,11 +43,12 @@ const CardPage = () => {
           navigate("/");
           return;
         }
-        const { data } = await axios.get("/cards/card/" + id);
+        const { data } = await axios.get("/cards/" + id);
         let newInputState = {
           ...data,
         };
-        if (data.image && data.image.url) {
+        console.log("newInputState", newInputState);
+        /*  if (data.image && data.image.url) {
           newInputState.url = data.image.url;
         } else {
           newInputState.url = "";
@@ -48,17 +57,20 @@ const CardPage = () => {
           newInputState.alt = data.image.alt;
         } else {
           newInputState.alt = "";
-        }
+        } */
         if (data.image && !data.zipCode) {
           newInputState.zipCode = "";
         }
-        if (data.bizNumber && data.image.alt) {
+        /*  if (data.bizNumber && data.image.alt) {
           newInputState.alt = data.image.alt;
         } else {
           newInputState.alt = "";
-        }
-        delete newInputState.image;
+        } */
+        /*  delete newInputState.image; */
+        delete newInputState.image._id;
         delete newInputState.likes;
+        delete newInputState.zipCode;
+
         delete newInputState._id;
         delete newInputState.__v;
         delete newInputState.user_id;
@@ -66,26 +78,28 @@ const CardPage = () => {
         delete newInputState.createdAt;
         setInputState(newInputState);
         setInitialnputState(newInputState);
+        setSelectedCategory(newInputState.category);
       } catch (err) {
         console.log("error from axios", err);
       }
     })();
   }, [id]);
   useEffect(() => {
-    const joiResponse = validateEditSchema(inputState);
+    const joiResponse = validateEditCardSchema(inputState);
+    console.log("joi", joiResponse);
     setInputsErrorsState(joiResponse);
     if (
       inputState &&
       !joiResponse &&
-      inputState.title &&
-      inputState.subTitle &&
+      inputState.title /* &&
+       inputState.subTitle &&
       inputState.phone &&
       inputState.country &&
       inputState.email &&
       inputState.web &&
       inputState.city &&
       inputState.street &&
-      inputState.houseNumber
+      inputState.houseNumber */
     ) {
       setButtonValid(true);
     } else {
@@ -115,6 +129,12 @@ const CardPage = () => {
   const cancleButoon = () => {
     navigate(ROUTES.HOME);
   };
+  const handleCategoryChange = (event) => {
+    let newInputState = JSON.parse(JSON.stringify(inputState));
+    newInputState.category = event.target.value;
+    setInputState(newInputState);
+    setSelectedCategory(event.target.value);
+  };
   if (!inputState) {
     return <CircularProgress />;
   }
@@ -138,35 +158,53 @@ const CardPage = () => {
         <CardMedia
           component="img"
           sx={{ height: 140 }}
-          image={inputState.url}
-          title={inputState.title}
+          image={inputState.image.url}
+          title={inputState.image.title}
         />
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {[
               { description: "title", required: true },
-              { description: "subTitle", required: true },
+              /* { description: "subTitle", required: true }, */
               { description: "description", required: true },
-              { description: "phone", required: true },
+              { description: "price", required: true },
+              { description: "category", required: true },
+              /*   { description: "phone", required: true },
               { description: "email", required: true },
-              { description: "web", required: true },
-              { description: "url", required: false },
-              { description: "alt", required: false },
-              { description: "state", required: false },
+              { description: "web", required: true }, */
+              { description: "image.url", required: false },
+              { description: "image.alt", required: false },
+              /*  { description: "state", required: false },
               { description: "country", required: true },
               { description: "city", required: true },
               { description: "street", required: true },
               { description: "houseNumber", required: true },
-              { description: "zipCode", required: false },
+              { description: "zipCode", required: false }, */
             ].map((props, index) => (
               <Grid item xs={12} sm={6} key={index}>
-                <UserComponent
-                  description={props.description}
-                  inputStates={inputState}
-                  onChanges={handleInputChange}
-                  inputsErrorsStates={inputsErrorsState}
-                  required={props.required}
-                />
+                {props.description === "category" ? (
+                  <React.Fragment>
+                    <Typography>Category</Typography>
+                    <Select
+                      value={selectedCategory}
+                      onChange={handleCategoryChange}
+                    >
+                      {categories.map((category) => (
+                        <MenuItem key={category} value={category}>
+                          {category}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </React.Fragment>
+                ) : (
+                  <UserComponent
+                    description={props.description}
+                    inputStates={inputState}
+                    onChanges={handleInputChange}
+                    inputsErrorsStates={inputsErrorsState}
+                    required={props.required}
+                  />
+                )}
               </Grid>
             ))}
             <Stack xs={12} sx={{ m: 2 }} spacing={2} direction="row">

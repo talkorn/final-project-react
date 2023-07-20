@@ -125,6 +125,7 @@ const CardPage = () => {
           title={inputState.title}
           /* subTitle={inputState.subTitle} */
           price={inputState.price}
+          category={inputState.category}
           description={inputState.description}
           /*  phone={inputState.phone} */
           img={inputState.url}

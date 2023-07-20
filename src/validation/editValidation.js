@@ -1,4 +1,4 @@
-import validation from "./validation";
+/* import validation from "./validation";
 import Joi from "joi";
 
 const editSchema = Joi.object({
@@ -24,3 +24,4 @@ const editSchema = Joi.object({
 });
 const validateEditSchema = (userInput) => validation(editSchema, userInput);
 export default validateEditSchema;
+ */

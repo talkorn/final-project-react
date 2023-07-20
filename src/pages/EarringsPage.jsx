@@ -8,13 +8,13 @@ import useLoggedIn from "../hooks/useLoggedIn";
 import CssBaseline from "@mui/material/CssBaseline";
 import useQueryParams from "../hooks/useQueryParam.js";
 import filterFunction from "../utilis/filterFunc.js";
-const FavoritePage = () => {
+const EarringsPage = () => {
   const searchParams = useQueryParams();
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
   const LoggedIn = useLoggedIn();
   const navigate = useNavigate();
-  const payload = useSelector((store) => store.authSlice.payload);
+  let payload = useSelector((store) => store.authSlice.payload);
 
   useEffect(() => {
     LoggedIn();
@@ -43,12 +43,15 @@ const FavoritePage = () => {
     filterFunc();
   }, [searchParams.filter]);
   if (!payload) {
-    return;
+    console.log("hkfgjh");
+    let payload = {};
+    payload.isBusiness = false;
+    payload.isAdmin = false;
   }
-  const idUser = payload._id;
+  /*   const idUser = payload._id;
   if (!idUser) {
     return;
-  }
+  } */
   if (!cardsArr) {
     return <CircularProgress />;
   }
@@ -83,22 +86,18 @@ const FavoritePage = () => {
   return (
     <Box>
       <CssBaseline />
-      <h1>Favorite</h1>
+      <h1 style={{ fontFamily: "Pangolin" }}>Earrings</h1>
 
-      {cardsArr.filter((item) => item.likes == idUser).length == 0 ? (
-        <h2>Your favorite cards cart is empty</h2>
-      ) : (
-        <h2>Here You Can See All Your Favorite Cards</h2>
-      )}
+      <h2>Here You Can See Our Beutiful Earrings</h2>
       <Grid container spacing={2}>
         {cardsArr &&
           cardsArr
-            .filter((item) => item.likes.includes(idUser))
+            .filter((item) => item.category === "earrings")
             .map((item) => (
               <Grid item xs={12} sm={6} md={4} key={item._id + Date.now()}>
                 <CardComponent
                   likes={item.likes}
-                  idUser={idUser}
+                  /*  idUser={idUser} */
                   onClick={moveToCardPage}
                   id={item._id}
                   title={item.title}
@@ -120,4 +119,4 @@ const FavoritePage = () => {
     </Box>
   );
 };
-export default FavoritePage;
+export default EarringsPage;

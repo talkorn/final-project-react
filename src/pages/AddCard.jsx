@@ -26,16 +26,22 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import React from "react";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 const CardPage = () => {
   /*  const { id } = useParams(); */
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const [buttonValid, setButtonValid] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const categories = ["earrings", "necklaces", "bracelets"];
   const initialCard = {
     title: "",
     /*  subTitle: "", */
     description: "",
     price: "",
+    category: "",
     /*  phone: "",
     email: "",
     web: "", */
@@ -117,6 +123,7 @@ const CardPage = () => {
     /*  let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value; */
     setInputState(newInputState);
+    setSelectedCategory(newInputState.category);
   };
   const resetButton = () => {
     setInputState(initialCard);
@@ -125,6 +132,12 @@ const CardPage = () => {
 
   const cancleButoon = () => {
     navigate(ROUTES.HOME);
+  };
+  const handleCategoryChange = (event) => {
+    let newInputState = JSON.parse(JSON.stringify(inputState));
+    newInputState.category = event.target.value;
+    setInputState(newInputState);
+    setSelectedCategory(event.target.value);
   };
   if (!inputState) {
     return <CircularProgress />;
@@ -164,15 +177,32 @@ const CardPage = () => {
               //{ description: "image.alt", required: false },
 
               { description: "price", required: true },
+              { description: "category", required: true },
             ].map((props, index) => (
               <Grid item xs={12} sm={6} key={index}>
-                <UserComponent
-                  description={props.description}
-                  inputStates={inputState}
-                  onChanges={handleInputChange}
-                  inputsErrorsStates={inputsErrorsState}
-                  required={props.required}
-                />
+                {props.description === "category" ? (
+                  <React.Fragment>
+                    <Typography>Category</Typography>
+                    <Select
+                      value={selectedCategory}
+                      onChange={handleCategoryChange}
+                    >
+                      {categories.map((category) => (
+                        <MenuItem key={category} value={category}>
+                          {category}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </React.Fragment>
+                ) : (
+                  <UserComponent
+                    description={props.description}
+                    inputStates={inputState}
+                    onChanges={handleInputChange}
+                    inputsErrorsStates={inputsErrorsState}
+                    required={props.required}
+                  />
+                )}
               </Grid>
             ))}
             <Stack xs={12} sx={{ m: 2 }} spacing={2} direction="row">

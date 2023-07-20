@@ -131,8 +131,8 @@ const ProfilePage = () => {
         <CardMedia
           component="img"
           sx={{ height: 140 }}
-          image={inputState.imageUrl}
-          title={inputState.imageTitle}
+          image={inputState.image.url}
+          title={inputState.image.title}
         />{" "}
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>

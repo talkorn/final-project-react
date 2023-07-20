@@ -10,5 +10,8 @@ const ROUTES = {
   MYCARDS: "/myCards",
   SANDBOX: "/sandBox",
   CRM: "/CrmTable",
+  NECKLACES: "/necklaces",
+  EARRINGS: "/earrings",
+  BRACELETS: "/bracelets",
 };
 export default ROUTES;

@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 const CardComponent = ({
   id,
   title,
-
+  category,
   description,
   idUser,
   img,
@@ -41,12 +41,13 @@ const CardComponent = ({
   const handleCloseCallWindow = () => {
     setShowCallWindow(false);
   };
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         onClick={() => onClick(id)}
         component="img"
-        sx={{ height: 140 }}
+        sx={{ height: 200 }}
         image={img}
         title={title}
       />{" "}
@@ -57,13 +58,16 @@ const CardComponent = ({
         <Divider />
 
         <Typography variant="body2" color="text.secondary">
-          {"Price: "} {price}
+          {"Price: "} {price} {"$"}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {"Category: "} {category}
         </Typography>
 
-        <Typography variant="body2" color="text.secondary">
+        {/*  <Typography variant="body2" color="text.secondary">
           {"Card Number: "}
           {bizNumber}
-        </Typography>
+        </Typography> */}
       </CardContent>
       <CardActions>
         {canDelete || (canEdit && cardIdUser === idUser) ? (

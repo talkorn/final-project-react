@@ -7,9 +7,8 @@ const filterFunction = (data, searchParams) => {
     filter = searchParams.filter;
   }
   let searchResult = data.filter(
-    (card) =>
-      card.title.toLowerCase().startsWith(filter.toLowerCase()) ||
-      card.bizNumber.toLowerCase().startsWith(filter.toLowerCase())
+    (card) => card.title.toLowerCase().startsWith(filter.toLowerCase()) /* ||
+      card.bizNumber.toLowerCase().startsWith(filter.toLowerCase()) */
   );
   return searchResult;
 };

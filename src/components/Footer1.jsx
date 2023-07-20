@@ -28,9 +28,10 @@ export default function SimpleBottomNavigation() {
       >
         <BottomNavigationAction
           component={Link}
+          style={{ color: "black" }}
           to={ROUTES.ABOUT}
           label="About"
-          icon={<InfoIcon color="Primary" />}
+          icon={<InfoIcon style={{ color: "black" }} />}
         />
         {isLoggedIn && (
           <BottomNavigationAction
