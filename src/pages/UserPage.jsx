@@ -19,13 +19,17 @@ const UserPage = () => {
     (async () => {
       try {
         let newInputState;
-        const { data } = await axios.get("users/");
+        const { data } = await axios.get("users");
         if (data) {
-          let userInfo = data.users;
+          let userInfo = data;
+          console.log("userInfo", userInfo);
           userInfo = userInfo.find((item) => item._id === id);
           newInputState = {
             ...userInfo,
           };
+        }
+        if (newInputState.name.middle === "") {
+          newInputState.name.middle = "-";
         }
         setInputState(newInputState);
       } catch (err) {
@@ -57,25 +61,25 @@ const UserPage = () => {
         <CardMedia
           component="img"
           sx={{ height: 140 }}
-          image={inputState.imageUrl}
-          title={inputState.title}
+          image={inputState.image.url}
+          title={inputState.image.title}
         />{" "}
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {[
-              { description: "firstName", required: true },
-              { description: "middleName", required: false },
-              { description: "lastName", required: true },
+              { description: "name.first", required: true },
+              { description: "name.middle", required: false },
+              { description: "name.last", required: true },
               { description: "phone", required: true },
               { description: "email", required: true },
-              { description: "imageUrl", required: false },
-              { description: "imageAlt", required: false },
-              { description: "state", required: false },
-              { description: "country", required: true },
-              { description: "city", required: true },
-              { description: "street", required: true },
-              { description: "houseNumber", required: true },
-              { description: "zipCode", required: false },
+              { description: "image.url", required: false },
+              { description: "image.alt", required: false },
+              { description: "address.state", required: false },
+              { description: "address.country", required: true },
+              { description: "address.city", required: true },
+              { description: "address.street", required: true },
+              { description: "address.houseNumber", required: true },
+              { description: "address.zip", required: false },
             ].map((props, index) => (
               <Grid item xs={12} sm={6} key={index}>
                 <UserComponent

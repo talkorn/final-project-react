@@ -9,6 +9,13 @@ import useQueryParams from "../hooks/useQueryParam.js";
 import filterFunction from "../utilis/filterFunc.js";
 import { toast } from "react-toastify";
 import Slideshow from "../components/SlideComponenet";
+import SortHeader from "../components/Navbar/SortNavBar";
+import {
+  numAscending,
+  numDescending,
+  strAscending,
+  strDescending,
+} from "../utilis/sortFunction";
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
@@ -84,6 +91,12 @@ const HomePage = () => {
       <h1>Welcome To Tal's Jewelry</h1>
       <h2>Here You Can Find Our Uniqe and Hand Made Jewelry</h2>
       <Slideshow />
+      <SortHeader
+        onNumAscending={() => setCardsArr(numAscending(cardsArr))}
+        onNumDescending={() => setCardsArr(numDescending(cardsArr))}
+        onStrAscending={() => setCardsArr(strAscending(cardsArr))}
+        onStrDescending={() => setCardsArr(strDescending(cardsArr))}
+      />
       <Grid container spacing={1}>
         {cardsArr.map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item._id + Date.now()}>

@@ -50,7 +50,7 @@ const LogIn = () => {
       navigate(ROUTES.HOME);
     } catch (err) {
       console.log("login error", err);
-      toast.error(err.response.data);
+      toast.error(err.response);
     }
   };
   const handleInputChange = (ev) => {

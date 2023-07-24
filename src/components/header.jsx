@@ -1,7 +1,10 @@
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
-import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import CardMedia from "@mui/material/CardMedia";
+
 const NameHeader = () => {
+  const imagePath = `${process.env.PUBLIC_URL}/logoTals.png`;
+
   return (
     <CardHeader
       sx={{
@@ -26,29 +29,23 @@ const NameHeader = () => {
             letterSpacing: ".1rem",
             color: "black",
             fontSize: "3rem",
+            display: "flex", // Add this to display the elements in a row
+            alignItems: "center", // Add this to vertically align the elements
           }}
         >
-          <CardGiftcardIcon />
-          Tal's Jewelry
-          <div style={{ fontSize: "1rem" }}>*RAMAT HASHARON-HANEVEEM*</div>
+          <img
+            src={imagePath}
+            alt="Tal's Jewelry"
+            style={{ width: "50px", height: "50px", marginRight: "10px" }}
+          />
+          <div>
+            Tal's Jewelry
+            <div style={{ fontSize: "1rem" }}>*RAMAT HASHARON-HANEVEEM*</div>
+          </div>
         </Typography>
       }
     />
-    /* <CardHeader
-      title=" Tal's Jewelry"
-      sx={{
-        textAlign: "center",
-        fontFamily: "monospace",
-        fontWeight: "bold",
-        letterSpacing: ".1rem",
-        color: "gold",
-        textDecoration: "none",
-        fontSize: "6rem",
-        "&:hover": {
-          color: "black",
-        },
-      }} 
-    />*/
   );
 };
+
 export default NameHeader;
