@@ -8,6 +8,14 @@ import useLoggedIn from "../hooks/useLoggedIn";
 import CssBaseline from "@mui/material/CssBaseline";
 import useQueryParams from "../hooks/useQueryParam.js";
 import filterFunction from "../utilis/filterFunc.js";
+import SortHeader from "../components/Navbar/SortNavBar";
+import {
+  numAscending,
+  numDescending,
+  strAscending,
+  strDescending,
+} from "../utilis/sortFunction";
+
 const FavoritePage = () => {
   const searchParams = useQueryParams();
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
@@ -90,6 +98,12 @@ const FavoritePage = () => {
       ) : (
         <h2>Here You Can See All Your Favorite Cards</h2>
       )}
+      <SortHeader
+        onNumAscending={() => setCardsArr(numAscending(cardsArr))}
+        onNumDescending={() => setCardsArr(numDescending(cardsArr))}
+        onStrAscending={() => setCardsArr(strAscending(cardsArr))}
+        onStrDescending={() => setCardsArr(strDescending(cardsArr))}
+      />
       <Grid container spacing={2}>
         {cardsArr &&
           cardsArr

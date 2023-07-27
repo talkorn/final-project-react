@@ -16,13 +16,36 @@ import {
   strAscending,
   strDescending,
 } from "../utilis/sortFunction";
+import TableComponent from "../components/TableComponnent";
+import useResizeHook from "../hooks/useResizeHook";
+
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
+  //const [TabletSize, setTabletSize] = useState(false);
   const [cardsArr, setCardsArr] = useState(null);
+  const [ShowTable, setShowTable] = useState(false);
+  const [ShowCards, setShowCards] = useState(true);
   const navigate = useNavigate();
+  const TabletSize = useResizeHook();
   /*  const LoggedIn = useLoggedIn(); */
   const searchParams = useQueryParams();
   const payload = useSelector((store) => store.authSlice.payload);
+  /* useEffect(() => {
+    const handleResize = () => {
+      setTabletSize(window.innerWidth <= 600);
+    };
+
+    // Initial check on component mount
+    handleResize();
+
+    // Add event listener to listen for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); */
 
   useEffect(() => {
     /*  dispatch(); */
@@ -37,6 +60,7 @@ const HomePage = () => {
         console.log("err from axios", err);
       });
   }, []);
+
   const filterFunc = (data) => {
     let dataToSearch = originalCardsArr || data;
     if (!dataToSearch) {
@@ -64,7 +88,14 @@ const HomePage = () => {
   const moveToEditPage = (id) => {
     navigate(`/edit/${id}`);
   };
-
+  const changeTableToCards = () => {
+    setShowTable(true);
+    setShowCards(false);
+  };
+  const changeCardsToTable = () => {
+    setShowTable(false);
+    setShowCards(true);
+  };
   const addToFavorite = async (id) => {
     await axios.patch(`/cards/${id}`);
     try {
@@ -96,39 +127,77 @@ const HomePage = () => {
         onNumDescending={() => setCardsArr(numDescending(cardsArr))}
         onStrAscending={() => setCardsArr(strAscending(cardsArr))}
         onStrDescending={() => setCardsArr(strDescending(cardsArr))}
+        onChangeTableToCards={() => changeTableToCards()}
+        onChangeCardsToTable={() => changeCardsToTable()}
       />
       <Grid container spacing={1}>
         {cardsArr.map((item) => (
+          <Grid item xs={12} key={item._id + Date.now()}>
+            {ShowTable && !TabletSize && (
+              <TableComponent
+                category={item.category}
+                likes={item.likes}
+                idUser={idUser}
+                cardIdUser={item.user_id}
+                onClick={moveToCardPage}
+                id={item._id}
+                title={item.title}
+                subTitle={item.subTitle}
+                description={item.description}
+                price={item.price}
+                img={item.image.url}
+                web={item.web}
+                state={item.state}
+                country={item.country}
+                city={item.city}
+                street={item.street}
+                email={item.email}
+                houseNumber={item.houseNumber}
+                zipCode={item.zipCode}
+                bizNumber={item.bizNumber}
+                onEdit={moveToEditPage}
+                onDelete={deleteCardFromInitialCardsArr}
+                onFavorites={addToFavorite}
+                canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                canDelete={payload && payload.isAdmin}
+                canUser={payload && payload._id}
+              />
+            )}
+          </Grid>
+        ))}
+        {cardsArr.map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item._id + Date.now()}>
             {" "}
-            <CardComponent
-              category={item.category}
-              likes={item.likes}
-              idUser={idUser}
-              cardIdUser={item.user_id}
-              onClick={moveToCardPage}
-              id={item._id}
-              title={item.title}
-              subTitle={item.subTitle}
-              description={item.description}
-              price={item.price}
-              img={item.image.url}
-              web={item.web}
-              state={item.state}
-              country={item.country}
-              city={item.city}
-              street={item.street}
-              email={item.email}
-              houseNumber={item.houseNumber}
-              zipCode={item.zipCode}
-              bizNumber={item.bizNumber}
-              onEdit={moveToEditPage}
-              onDelete={deleteCardFromInitialCardsArr}
-              onFavorites={addToFavorite}
-              canEdit={payload && (payload.isBusiness || payload.isAdmin)}
-              canDelete={payload && payload.isAdmin}
-              canUser={payload && payload._id}
-            />
+            {ShowCards || (!ShowCards && TabletSize) ? (
+              <CardComponent
+                category={item.category}
+                likes={item.likes}
+                idUser={idUser}
+                cardIdUser={item.user_id}
+                onClick={moveToCardPage}
+                id={item._id}
+                title={item.title}
+                subTitle={item.subTitle}
+                description={item.description}
+                price={item.price}
+                img={item.image.url}
+                web={item.web}
+                state={item.state}
+                country={item.country}
+                city={item.city}
+                street={item.street}
+                email={item.email}
+                houseNumber={item.houseNumber}
+                zipCode={item.zipCode}
+                bizNumber={item.bizNumber}
+                onEdit={moveToEditPage}
+                onDelete={deleteCardFromInitialCardsArr}
+                onFavorites={addToFavorite}
+                canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                canDelete={payload && payload.isAdmin}
+                canUser={payload && payload._id}
+              />
+            ) : null}
           </Grid>
         ))}
       </Grid>

@@ -8,10 +8,23 @@ import useLoggedIn from "../hooks/useLoggedIn";
 import CssBaseline from "@mui/material/CssBaseline";
 import useQueryParams from "../hooks/useQueryParam.js";
 import filterFunction from "../utilis/filterFunc.js";
+import SortHeader from "../components/Navbar/SortNavBar";
+import {
+  numAscending,
+  numDescending,
+  strAscending,
+  strDescending,
+} from "../utilis/sortFunction";
+import TableComponent from "../components/TableComponnent";
+import useResizeHook from "../hooks/useResizeHook";
+
 const EarringsPage = () => {
+  const [ShowTable, setShowTable] = useState(false);
+  const [ShowCards, setShowCards] = useState(true);
   const searchParams = useQueryParams();
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
+  const TabletSize = useResizeHook();
   const LoggedIn = useLoggedIn();
   const navigate = useNavigate();
   let payload = useSelector((store) => store.authSlice.payload);
@@ -63,7 +76,14 @@ const EarringsPage = () => {
   const moveToEditPage = (id) => {
     navigate(`/edit/${id}`);
   };
-
+  const changeTableToCards = () => {
+    setShowTable(true);
+    setShowCards(false);
+  };
+  const changeCardsToTable = () => {
+    setShowTable(false);
+    setShowCards(true);
+  };
   const addToFavorites = async (id) => {
     await axios.patch(`/cards/${id}`);
     try {
@@ -89,30 +109,67 @@ const EarringsPage = () => {
       <h1 style={{ fontFamily: "Pangolin" }}>Earrings</h1>
 
       <h2>Here You Can See Our Beutiful Earrings</h2>
+      <SortHeader
+        onNumAscending={() => setCardsArr(numAscending(cardsArr))}
+        onNumDescending={() => setCardsArr(numDescending(cardsArr))}
+        onStrAscending={() => setCardsArr(strAscending(cardsArr))}
+        onStrDescending={() => setCardsArr(strDescending(cardsArr))}
+        onChangeTableToCards={() => changeTableToCards()}
+        onChangeCardsToTable={() => changeCardsToTable()}
+      />
       <Grid container spacing={2}>
         {cardsArr &&
           cardsArr
             .filter((item) => item.category === "earrings")
             .map((item) => (
+              <Grid item xs={12} key={item._id + Date.now()}>
+                {ShowTable && !TabletSize && (
+                  <TableComponent
+                    likes={item.likes}
+                    /*  idUser={idUser} */
+                    onClick={moveToCardPage}
+                    id={item._id}
+                    title={item.title}
+                    description={item.description}
+                    price={item.price}
+                    category={item.category}
+                    img={item.image.url}
+                    onEdit={moveToEditPage}
+                    onDelete={deleteCardFromInitialCardsArr}
+                    onFavorites={addToFavorites}
+                    canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                    canDelete={payload && payload.isAdmin}
+                    canUser={payload && payload._id}
+                    cardIdUser={item.user_id}
+                  />
+                )}
+              </Grid>
+            ))}
+        {cardsArr &&
+          cardsArr
+            .filter((item) => item.category === "earrings")
+            .map((item) => (
               <Grid item xs={12} sm={6} md={4} key={item._id + Date.now()}>
-                <CardComponent
-                  likes={item.likes}
-                  /*  idUser={idUser} */
-                  onClick={moveToCardPage}
-                  id={item._id}
-                  title={item.title}
-                  description={item.description}
-                  price={item.price}
-                  category={item.category}
-                  img={item.image.url}
-                  onEdit={moveToEditPage}
-                  onDelete={deleteCardFromInitialCardsArr}
-                  onFavorites={addToFavorites}
-                  canEdit={payload && (payload.isBusiness || payload.isAdmin)}
-                  canDelete={payload && payload.isAdmin}
-                  canUser={payload && payload._id}
-                  cardIdUser={item.user_id}
-                />
+                {ShowCards || (!ShowCards && TabletSize) ? (
+                  <CardComponent
+                    likes={item.likes}
+                    /*  idUser={idUser} */
+                    onClick={moveToCardPage}
+                    id={item._id}
+                    title={item.title}
+                    description={item.description}
+                    price={item.price}
+                    category={item.category}
+                    img={item.image.url}
+                    onEdit={moveToEditPage}
+                    onDelete={deleteCardFromInitialCardsArr}
+                    onFavorites={addToFavorites}
+                    canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                    canDelete={payload && payload.isAdmin}
+                    canUser={payload && payload._id}
+                    cardIdUser={item.user_id}
+                  />
+                ) : null}
               </Grid>
             ))}
       </Grid>

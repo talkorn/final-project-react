@@ -29,13 +29,14 @@ import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-
+import { useSelector } from "react-redux";
 const CardPage = () => {
   /*  const { id } = useParams(); */
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const [buttonValid, setButtonValid] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const categories = ["earrings", "necklaces", "bracelets"];
+  let payload = useSelector((store) => store.authSlice.payload);
   const initialCard = {
     title: "",
     /*  subTitle: "", */
@@ -142,6 +143,7 @@ const CardPage = () => {
   if (!inputState) {
     return <CircularProgress />;
   }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

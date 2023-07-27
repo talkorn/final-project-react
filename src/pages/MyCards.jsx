@@ -12,6 +12,14 @@ import axios from "axios";
 import CssBaseline from "@mui/material/CssBaseline";
 import useQueryParams from "../hooks/useQueryParam.js";
 import filterFunction from "../utilis/filterFunc.js";
+import SortHeader from "../components/Navbar/SortNavBar";
+import {
+  numAscending,
+  numDescending,
+  strAscending,
+  strDescending,
+} from "../utilis/sortFunction";
+
 const MyCardsPage = () => {
   const searchParams = useQueryParams();
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
@@ -89,6 +97,12 @@ const MyCardsPage = () => {
       <CssBaseline />
       <h1>Cards Page</h1>
       <h2>Here You Can Find All your Buisness Cards</h2>
+      <SortHeader
+        onNumAscending={() => setCardsArr(numAscending(cardsArr))}
+        onNumDescending={() => setCardsArr(numDescending(cardsArr))}
+        onStrAscending={() => setCardsArr(strAscending(cardsArr))}
+        onStrDescending={() => setCardsArr(strDescending(cardsArr))}
+      />
       <Grid item xs={4}>
         <Box
           sx={{
@@ -123,7 +137,7 @@ const MyCardsPage = () => {
                 title={item.title}
                 subTitle={item.subTitle}
                 description={item.description}
-                phone={item.phone}
+                price={item.price}
                 img={item.image.url}
                 web={item.web}
                 state={item.state}
