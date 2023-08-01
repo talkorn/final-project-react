@@ -17,6 +17,7 @@ import {
 } from "../utilis/sortFunction";
 import TableComponent from "../components/TableComponnent";
 import useResizeHook from "../hooks/useResizeHook";
+import { toast } from "react-toastify";
 
 const NeclacesPage = () => {
   const [ShowTable, setShowTable] = useState(false);
@@ -40,6 +41,7 @@ const NeclacesPage = () => {
 
       .catch((err) => {
         console.log("err from axios", err);
+        toast.error(err.response.data);
       });
   }, []);
   const filterFunc = (data) => {
@@ -61,11 +63,7 @@ const NeclacesPage = () => {
     payload.isBusiness = false;
     payload.isAdmin = false;
   }
-  console.log("paykoad", payload);
-  /* const idUser = payload._id;
-  if (!idUser) {
-    return;
-  } */
+
   if (!cardsArr) {
     return <CircularProgress />;
   }
@@ -135,6 +133,7 @@ const NeclacesPage = () => {
                     description={item.description}
                     price={item.price}
                     category={item.category}
+                    colors={item.colors}
                     img={item.image.url}
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}
@@ -162,6 +161,7 @@ const NeclacesPage = () => {
                     description={item.description}
                     price={item.price}
                     category={item.category}
+                    colors={item.colors}
                     img={item.image.url}
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}

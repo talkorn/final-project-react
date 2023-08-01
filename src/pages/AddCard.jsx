@@ -43,8 +43,8 @@ const CardPage = () => {
     description: "",
     price: "",
     category: "",
-    /*  phone: "",
-    email: "",
+    colors: "",
+    /* email: "",
     web: "", */
     image: {
       url: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
@@ -180,6 +180,7 @@ const CardPage = () => {
 
               { description: "price", required: true },
               { description: "category", required: true },
+              { description: "colors", required: true },
             ].map((props, index) => (
               <Grid item xs={12} sm={6} key={index}>
                 {props.description === "category" ? (

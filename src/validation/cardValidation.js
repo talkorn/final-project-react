@@ -7,6 +7,7 @@ const editCardSchema = Joi.object({
   description: Joi.string().min(2).max(1024).required(),
   price: Joi.number().min(1).max(99999999).required(),
   category: Joi.string().min(1).max(256).required(),
+  colors: Joi.string().min(1).max(256).required(),
 
   image: Joi.object({
     url: Joi.string().regex(

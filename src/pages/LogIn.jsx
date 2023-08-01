@@ -44,13 +44,30 @@ const LogIn = () => {
         return;
       }
       const { data } = await axios.post("/users/login", inputState);
+      console.log("data.data", data);
       localStorage.setItem("token", data.token);
       toast.success("SignIn Completed");
       loggedIn();
       navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("login error", err);
-      toast.error(err.response);
+      console.log(err);
+      /* if (err.response.data) {
+        
+       
+      } else {
+        
+      } */ toast.error(err.response.statusText);
+      // toast.error(err.response.data.message);
+      toast.error(err.response.data);
+      /* if (err.response.statusText === "Bad Request") {
+        console.log("this mis");
+        toast.error(err.message);
+        toast.error("Bad Request");
+      } else {
+        console.log("login error", err.message);
+
+        toast.error(err.response.data);
+      } */
     }
   };
   const handleInputChange = (ev) => {

@@ -169,6 +169,7 @@ const CardPage = () => {
               { description: "description", required: true },
               { description: "price", required: true },
               { description: "category", required: true },
+              { description: "colors", required: true },
               /*   { description: "phone", required: true },
               { description: "email", required: true },
               { description: "web", required: true }, */

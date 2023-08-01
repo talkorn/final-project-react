@@ -9,6 +9,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useQueryParams from "../hooks/useQueryParam.js";
 import filterFunction from "../utilis/filterFunc.js";
 import SortHeader from "../components/Navbar/SortNavBar";
+import { ToastContainer, toast } from "react-toastify";
 import {
   numAscending,
   numDescending,
@@ -39,7 +40,8 @@ const EarringsPage = () => {
       })
 
       .catch((err) => {
-        console.log("err from axios", err);
+        console.log("err from axios", err.response.data);
+        toast.error(err.response.data);
       });
   }, []);
   const filterFunc = (data) => {
@@ -133,6 +135,7 @@ const EarringsPage = () => {
                     description={item.description}
                     price={item.price}
                     category={item.category}
+                    colors={item.colors}
                     img={item.image.url}
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}
@@ -160,6 +163,7 @@ const EarringsPage = () => {
                     description={item.description}
                     price={item.price}
                     category={item.category}
+                    colors={item.colors}
                     img={item.image.url}
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}

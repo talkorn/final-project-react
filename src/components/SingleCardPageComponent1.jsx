@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import CallIcon from "@mui/icons-material/Call";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -23,16 +23,11 @@ const SingleCardPageComponent = ({
   title,
   subTitle,
   description,
-  phone,
+  category,
+  colors,
   img,
-  web,
-  state,
-  country,
-  city,
-  street,
-  email,
-  houseNumber,
-  zipCode,
+
+  price,
   bizNumber,
   createdAt,
   onEdit,
@@ -46,14 +41,8 @@ const SingleCardPageComponent = ({
   cardIdUser,
 }) => {
   const { id } = useParams();
-  const [showCallWindow, setShowCallWindow] = React.useState(false);
   const [cardNumber, setCardNumber] = useState(bizNumber);
-  const handleCallClick = () => {
-    setShowCallWindow(true);
-  };
-  const handleCloseCallWindow = () => {
-    setShowCallWindow(false);
-  };
+
   const handleInputChange = async () => {
     try {
       let users = await axios.get(`/cards/`);
@@ -99,21 +88,15 @@ const SingleCardPageComponent = ({
           {description}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {"Phone: "} {phone}
+          {"Price: "} {price}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {"web: "} {web}
+          {"Category: "} {category}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {"email: "} {email}
+          {"Color: "} {colors}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {`Adress: ${country} ${city} ${street}
-          ${houseNumber}`}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {"zipCode: "} {zipCode}
-        </Typography>
+
         <Typography variant="body2" color="text.secondary">
           {"createdAte: "} {createdAt}
         </Typography>
@@ -181,30 +164,6 @@ const SingleCardPageComponent = ({
           ) : (
             ""
           )}
-          <Button size="small" onClick={handleCallClick}>
-            <CallIcon />
-          </Button>{" "}
-          {showCallWindow && (
-            <Box
-              sx={{
-                position: "fixed",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                backgroundColor: "#ebe9b7",
-                padding: "10px",
-                borderRadius: "5px",
-              }}
-            >
-              <Typography variant="h6" gutterBottom>
-                Call Us {phone}
-              </Typography>
-
-              <Button variant="contained" onClick={handleCloseCallWindow}>
-                Close
-              </Button>
-            </Box>
-          )}
         </Box>
       </CardActions>
     </Card>
@@ -219,16 +178,8 @@ SingleCardPageComponent.propTypes = {
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
   canEdit: PropTypes.bool,
-  phone: PropTypes.string.isRequired,
-  web: PropTypes.string,
-  state: PropTypes.string,
-  country: PropTypes.string.isRequired,
-  city: PropTypes.string.isRequired,
-  street: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  houseNumber: PropTypes.string.isRequired,
-  zipCode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  bizNumber: PropTypes.string,
+
+  bizNumber: PropTypes.number,
 };
 
 SingleCardPageComponent.defaultProps = {

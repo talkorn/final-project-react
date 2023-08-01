@@ -17,6 +17,7 @@ import {
 } from "../utilis/sortFunction";
 import useResizeHook from "../hooks/useResizeHook";
 import TableComponent from "../components/TableComponnent";
+import { toast } from "react-toastify";
 
 const BraceletsPage = () => {
   const [ShowTable, setShowTable] = useState(false);
@@ -41,6 +42,7 @@ const BraceletsPage = () => {
 
       .catch((err) => {
         console.log("err from axios", err);
+        toast.error(err.response.data);
       });
   }, []);
   const filterFunc = (data) => {
@@ -135,6 +137,7 @@ const BraceletsPage = () => {
                     description={item.description}
                     price={item.price}
                     category={item.category}
+                    color={item.colors}
                     img={item.image.url}
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}
@@ -161,7 +164,7 @@ const BraceletsPage = () => {
                     title={item.title}
                     description={item.description}
                     price={item.price}
-                    category={item.category}
+                    ccolor={item.colors}
                     img={item.image.url}
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}

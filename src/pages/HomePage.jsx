@@ -30,22 +30,6 @@ const HomePage = () => {
   /*  const LoggedIn = useLoggedIn(); */
   const searchParams = useQueryParams();
   const payload = useSelector((store) => store.authSlice.payload);
-  /* useEffect(() => {
-    const handleResize = () => {
-      setTabletSize(window.innerWidth <= 600);
-    };
-
-    // Initial check on component mount
-    handleResize();
-
-    // Add event listener to listen for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []); */
 
   useEffect(() => {
     /*  dispatch(); */
@@ -58,6 +42,7 @@ const HomePage = () => {
       })
       .catch((err) => {
         console.log("err from axios", err);
+        toast.error(err.response.data);
       });
   }, []);
 
@@ -136,6 +121,7 @@ const HomePage = () => {
             {ShowTable && !TabletSize && (
               <TableComponent
                 category={item.category}
+                colors={item.colors}
                 likes={item.likes}
                 idUser={idUser}
                 cardIdUser={item.user_id}
@@ -146,14 +132,6 @@ const HomePage = () => {
                 description={item.description}
                 price={item.price}
                 img={item.image.url}
-                web={item.web}
-                state={item.state}
-                country={item.country}
-                city={item.city}
-                street={item.street}
-                email={item.email}
-                houseNumber={item.houseNumber}
-                zipCode={item.zipCode}
                 bizNumber={item.bizNumber}
                 onEdit={moveToEditPage}
                 onDelete={deleteCardFromInitialCardsArr}
@@ -171,6 +149,7 @@ const HomePage = () => {
             {ShowCards || (!ShowCards && TabletSize) ? (
               <CardComponent
                 category={item.category}
+                colors={item.colors}
                 likes={item.likes}
                 idUser={idUser}
                 cardIdUser={item.user_id}
@@ -181,14 +160,6 @@ const HomePage = () => {
                 description={item.description}
                 price={item.price}
                 img={item.image.url}
-                web={item.web}
-                state={item.state}
-                country={item.country}
-                city={item.city}
-                street={item.street}
-                email={item.email}
-                houseNumber={item.houseNumber}
-                zipCode={item.zipCode}
                 bizNumber={item.bizNumber}
                 onEdit={moveToEditPage}
                 onDelete={deleteCardFromInitialCardsArr}

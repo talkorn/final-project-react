@@ -31,13 +31,14 @@ const TableComponent = ({
   id,
   title,
   category,
+  colors,
   description,
   idUser,
   img,
   price,
   bizNumber,
   likes,
-  phone,
+
   cardIdUser,
   onClick,
   onEdit,
@@ -47,7 +48,7 @@ const TableComponent = ({
   canUser,
   canDelete,
 }) => {
-  const [showCallWindow, setShowCallWindow] = React.useState(false);
+  /*  const [showCallWindow, setShowCallWindow] = React.useState(false);
 
   const handleCallClick = () => {
     setShowCallWindow(true);
@@ -55,13 +56,13 @@ const TableComponent = ({
 
   const handleCloseCallWindow = () => {
     setShowCallWindow(false);
-  };
+  }; */
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <TableContainer component={Paper}>
-          <Table aria-label="simple table">
+          <Table aria-label="simple table" onClick={() => onClick(id)}>
             <TableBody>
               <TableRow
                 key={id}
@@ -69,7 +70,6 @@ const TableComponent = ({
               >
                 <TableCell component="th" scope="row">
                   <CardMedia
-                    onClick={() => onClick(id)}
                     component="img"
                     sx={{ height: 200, width: 200 }}
                     image={img}
@@ -81,6 +81,9 @@ const TableComponent = ({
                   <br />
                   {"category: "}
                   {category}
+                  <br />
+                  {"colors: "}
+                  {colors}
                   <br />
                   {bizNumber}
                   {"price:"} {price}
@@ -125,7 +128,7 @@ const TableComponent = ({
                       ) : (
                         ""
                       )}
-                      <Button size="small" onClick={handleCallClick}>
+                      {/*   <Button size="small" onClick={handleCallClick}>
                         <CallIcon />
                       </Button>{" "}
                       {showCallWindow && (
@@ -147,7 +150,7 @@ const TableComponent = ({
                             Close
                           </Button>
                         </Box>
-                      )}
+                      )} */}
                     </Box>
                   </CardActions>
                 </TableCell>

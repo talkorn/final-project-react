@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import CallIcon from "@mui/icons-material/Call";
+/* import CallIcon from "@mui/icons-material/Call"; */
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -17,6 +17,7 @@ const CardComponent = ({
   id,
   title,
   category,
+  colors,
   description,
   idUser,
   img,
@@ -32,7 +33,7 @@ const CardComponent = ({
   canDelete,
   cardIdUser,
 }) => {
-  const [showCallWindow, setShowCallWindow] = React.useState(false);
+  /*  const [showCallWindow, setShowCallWindow] = React.useState(false);
 
   const handleCallClick = () => {
     setShowCallWindow(true);
@@ -40,7 +41,7 @@ const CardComponent = ({
 
   const handleCloseCallWindow = () => {
     setShowCallWindow(false);
-  };
+  }; */
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -62,6 +63,9 @@ const CardComponent = ({
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {"Category: "} {category}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {"Colors: "} {colors}
         </Typography>
 
         {/*  <Typography variant="body2" color="text.secondary">
@@ -98,7 +102,7 @@ const CardComponent = ({
           ) : (
             ""
           )}
-          <Button size="small" onClick={handleCallClick}>
+          {/*  <Button size="small" onClick={handleCallClick}>
             <CallIcon />
           </Button>{" "}
           {showCallWindow && (
@@ -117,7 +121,7 @@ const CardComponent = ({
                 Close
               </Button>
             </Box>
-          )}
+          )} */}
         </Box>
       </CardActions>
     </Card>

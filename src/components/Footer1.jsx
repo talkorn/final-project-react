@@ -9,6 +9,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ROUTES from "../routes/ROUTES";
+import CopyrightIcon from "@mui/icons-material/Copyright";
 
 export default function SimpleBottomNavigation() {
   const [value, setValue] = React.useState(0);
@@ -16,6 +17,8 @@ export default function SimpleBottomNavigation() {
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
   const payload = useSelector((store) => store.authSlice.payload);
+  const imagePath = `${process.env.PUBLIC_URL}/logoTals.png`;
+
   return (
     <Box sx={{ m: "auto" }}>
       <Divider />
@@ -26,6 +29,18 @@ export default function SimpleBottomNavigation() {
           setValue(newValue);
         }}
       >
+        <BottomNavigationAction
+          component={Link}
+          style={{ color: "black" }}
+          to={ROUTES.HOME}
+          icon={
+            <img
+              src={imagePath}
+              alt="Tal's Jewelry"
+              style={{ width: "30px", height: "30xp" }}
+            />
+          }
+        />{" "}
         <BottomNavigationAction
           component={Link}
           style={{ color: "black" }}
@@ -50,6 +65,16 @@ export default function SimpleBottomNavigation() {
           />
         )}
       </BottomNavigation>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CopyrightIcon />
+        {"2023 Tal's Jewlery"}
+      </Box>
     </Box>
   );
 }
