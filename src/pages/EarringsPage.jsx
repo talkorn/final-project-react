@@ -63,8 +63,9 @@ const EarringsPage = () => {
     payload.isBusiness = false;
     payload.isAdmin = false;
   }
-  /*   const idUser = payload._id;
-  if (!idUser) {
+  const idUser = payload ? payload._id : null;
+  console.log(idUser);
+  /*  if (!idUser) {
     return;
   } */
   if (!cardsArr) {
@@ -91,6 +92,7 @@ const EarringsPage = () => {
     try {
       const { data } = await axios.get("/cards");
       setCardsArr(data);
+      console.log("data", data);
     } catch (err) {
       console.log("Error fetching updated card list", err);
     }
@@ -109,16 +111,27 @@ const EarringsPage = () => {
     <Box>
       <CssBaseline />
       <h1 style={{ fontFamily: "Pangolin" }}>Earrings</h1>
-
-      <h2>Here You Can See Our Beutiful Earrings</h2>
-      <SortHeader
-        onNumAscending={() => setCardsArr(numAscending(cardsArr))}
-        onNumDescending={() => setCardsArr(numDescending(cardsArr))}
-        onStrAscending={() => setCardsArr(strAscending(cardsArr))}
-        onStrDescending={() => setCardsArr(strDescending(cardsArr))}
-        onChangeTableToCards={() => changeTableToCards()}
-        onChangeCardsToTable={() => changeCardsToTable()}
-      />
+      <Box
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        {!TabletSize && (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <h2>Here You Can See Our Beutiful Earrings:</h2>
+          </div>
+        )}
+        <SortHeader
+          onNumAscending={() => setCardsArr(numAscending(cardsArr))}
+          onNumDescending={() => setCardsArr(numDescending(cardsArr))}
+          onStrAscending={() => setCardsArr(strAscending(cardsArr))}
+          onStrDescending={() => setCardsArr(strDescending(cardsArr))}
+          onChangeTableToCards={() => changeTableToCards()}
+          onChangeCardsToTable={() => changeCardsToTable()}
+        />{" "}
+      </Box>
       <Grid container spacing={2}>
         {cardsArr &&
           cardsArr
@@ -128,7 +141,7 @@ const EarringsPage = () => {
                 {ShowTable && !TabletSize && (
                   <TableComponent
                     likes={item.likes}
-                    /*  idUser={idUser} */
+                    idUser={idUser}
                     onClick={moveToCardPage}
                     id={item._id}
                     title={item.title}
@@ -156,7 +169,7 @@ const EarringsPage = () => {
                 {ShowCards || (!ShowCards && TabletSize) ? (
                   <CardComponent
                     likes={item.likes}
-                    /*  idUser={idUser} */
+                    idUser={idUser}
                     onClick={moveToCardPage}
                     id={item._id}
                     title={item.title}

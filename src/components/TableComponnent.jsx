@@ -62,7 +62,7 @@ const TableComponent = ({
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <TableContainer component={Paper}>
-          <Table aria-label="simple table" onClick={() => onClick(id)}>
+          <Table aria-label="simple table" /* onClick={() => onClick(id)} */>
             <TableBody>
               <TableRow
                 key={id}
@@ -74,6 +74,7 @@ const TableComponent = ({
                     sx={{ height: 200, width: 200 }}
                     image={img}
                     title={title}
+                    onClick={() => onClick(id)}
                   />
                 </TableCell>
                 <TableCell>

@@ -13,5 +13,6 @@ const ROUTES = {
   NECKLACES: "/necklaces",
   EARRINGS: "/earrings",
   BRACELETS: "/bracelets",
+  CONTACT: "/Contact",
 };
 export default ROUTES;

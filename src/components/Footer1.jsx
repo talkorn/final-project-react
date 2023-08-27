@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ROUTES from "../routes/ROUTES";
 import CopyrightIcon from "@mui/icons-material/Copyright";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
 
 export default function SimpleBottomNavigation() {
   const [value, setValue] = React.useState(0);
@@ -47,6 +48,13 @@ export default function SimpleBottomNavigation() {
           to={ROUTES.ABOUT}
           label="About"
           icon={<InfoIcon style={{ color: "black" }} />}
+        />
+        <BottomNavigationAction
+          component={Link}
+          style={{ color: "black" }}
+          to={ROUTES.CONTACT}
+          label="Contact"
+          icon={<ContactMailIcon style={{ color: "black" }} />}
         />
         {isLoggedIn && (
           <BottomNavigationAction

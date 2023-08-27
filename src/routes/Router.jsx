@@ -22,7 +22,7 @@ import CrmTable from "../pages/CrmPage";
 import UserPage from "../pages/UserPage";
 import AboutPage from "../pages/AboutPage";
 import ProtectedRoute from "../components/ProtectedRoute";
-
+import ContactPage from "../pages/ContactPage";
 const Router = () => {
   return (
     <Container maxWidth="xl">
@@ -39,6 +39,7 @@ const Router = () => {
           element={<ProtectedRoute element={<FavoritePage />} />}
         />
         <Route path={ROUTES.LOGIN} element={<LogInPage />} />
+        <Route path={ROUTES.CONTACT} element={<ContactPage />} />
         <Route path={ROUTES.LOGOUT} element={<HomePage />} />
         <Route
           path={ROUTES.PROFILE}

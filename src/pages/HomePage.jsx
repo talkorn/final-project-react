@@ -32,9 +32,6 @@ const HomePage = () => {
   const payload = useSelector((store) => store.authSlice.payload);
 
   useEffect(() => {
-    /*  dispatch(); */
-    /* LoggedIn(); */
-
     axios
       .get("http://localhost:8181/api/cards")
       .then(({ data }) => {

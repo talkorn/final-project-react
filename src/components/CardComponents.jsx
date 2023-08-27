@@ -42,7 +42,7 @@ const CardComponent = ({
   const handleCloseCallWindow = () => {
     setShowCallWindow(false);
   }; */
-
+  console.log(likes, idUser);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
