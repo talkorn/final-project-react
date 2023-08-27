@@ -20,6 +20,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ShortTYpographyComponnent from "../ShortTYpographyComponnent";
 import CheckboxComponnent from "../CheckboxComponnent";
+import { categoryActions } from "../../store/category";
+
 const notAuthPages = [
   { label: "SignUp", url: ROUTES.SIGNUP },
   { label: "Login", url: ROUTES.LOGIN },
@@ -35,6 +37,9 @@ function ResponsiveAppBar() {
   );
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const dispatch = useDispatch();
+  const currentCategory = useSelector(
+    (state) => state.categorySlice.theCategory
+  );
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -45,6 +50,10 @@ function ResponsiveAppBar() {
     localStorage.clear();
     dispatch(authActions.logout());
     toast.success("You've been signed out");
+  };
+  const handleChangeCategory = (newCategory) => {
+    dispatch(categoryActions.changeMode({ theCategory: newCategory }));
+    handleCloseNavMenu();
   };
   return (
     <AppBar position="static" sx={{ backgroundColor: "white" }}>
@@ -93,25 +102,25 @@ function ResponsiveAppBar() {
                 key={ROUTES.ABOUT}
                 url={ROUTES.ABOUT}
                 label="About"
-                /* onClick={handleCloseNavMenu} */
+                onClick={handleCloseNavMenu}
               />
               <NavLinkComponent
-                key={ROUTES.NECKLACES}
-                url={ROUTES.NECKLACES}
+                key={"necklaces"}
+                url={ROUTES.CATEGORY}
                 label="Necklaces"
-                /* onClick={handleCloseNavMenu} */
+                onClick={() => handleChangeCategory("necklaces")}
               />
               <NavLinkComponent
-                key={ROUTES.EARRINGS}
-                url={ROUTES.EARRINGS}
+                key={"earrings"}
+                url={ROUTES.CATEGORY}
                 label="Earrings"
-                /* onClick={handleCloseNavMenu} */
+                onClick={() => handleChangeCategory("earrings")}
               />
               <NavLinkComponent
-                key={ROUTES.BRACELETS}
-                url={ROUTES.BRACELETS}
+                key={"bracelets"}
+                url={ROUTES.CATEGORY}
                 label="Bracelets"
-                /* onClick={handleCloseNavMenu} */
+                onClick={() => handleChangeCategory("bracelets")}
               />
               {isLoggedIn && (
                 <NavLinkComponent
@@ -142,6 +151,14 @@ function ResponsiveAppBar() {
                   key={ROUTES.CRM}
                   url={ROUTES.CRM}
                   label="CRM"
+                  onClick={handleCloseNavMenu}
+                />
+              )}
+              {payload && payload.isAdmin && (
+                <NavLinkComponent
+                  key={ROUTES.FAVMANG}
+                  url={ROUTES.FAVMANG}
+                  label="FAVMANG"
                   onClick={handleCloseNavMenu}
                 />
               )}
@@ -184,9 +201,21 @@ function ResponsiveAppBar() {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <NavLinkComponent url={ROUTES.ABOUT} label="About" />
-            <NavLinkComponent url={ROUTES.NECKLACES} label="Necklaces" />
-            <NavLinkComponent url={ROUTES.EARRINGS} label="Earrings" />
-            <NavLinkComponent url={ROUTES.BRACELETS} label="Bracelets" />
+            <NavLinkComponent
+              url={ROUTES.CATEGORY}
+              label="Necklaces"
+              onClick={() => handleChangeCategory("necklaces")}
+            />
+            <NavLinkComponent
+              url={ROUTES.CATEGORY}
+              label="Earrings"
+              onClick={() => handleChangeCategory("earrings")}
+            />
+            <NavLinkComponent
+              url={ROUTES.CATEGORY}
+              label="Bracelets"
+              onClick={() => handleChangeCategory("bracelets")}
+            />
             {isLoggedIn && (
               <NavLinkComponent url={ROUTES.FAVCARDS} label="Favorite" />
             )}
@@ -198,6 +227,13 @@ function ResponsiveAppBar() {
             )}
             {payload && payload.isAdmin && (
               <NavLinkComponent key={ROUTES.CRM} url={ROUTES.CRM} label="CRM" />
+            )}
+            {payload && payload.isAdmin && (
+              <NavLinkComponent
+                key={ROUTES.FAVMANG}
+                url={ROUTES.FAVMANG}
+                label="FAVMANG"
+              />
             )}
           </Box>
           <SearchFromNav />

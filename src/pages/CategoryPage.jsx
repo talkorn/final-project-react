@@ -1,4 +1,4 @@
-/* import { Box, CircularProgress, Grid } from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CardComponent from "../components/CardComponents";
@@ -9,7 +9,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useQueryParams from "../hooks/useQueryParam.js";
 import filterFunction from "../utilis/filterFunc.js";
 import SortHeader from "../components/Navbar/SortNavBar";
-import { ToastContainer, toast } from "react-toastify";
 import {
   numAscending,
   numDescending,
@@ -18,17 +17,29 @@ import {
 } from "../utilis/sortFunction";
 import TableComponent from "../components/TableComponnent";
 import useResizeHook from "../hooks/useResizeHook";
-
-const EarringsPage = () => {
+import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import { categoryActions } from "../store/category";
+const CategoryPage = () => {
   const [ShowTable, setShowTable] = useState(false);
   const [ShowCards, setShowCards] = useState(true);
   const searchParams = useQueryParams();
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
-  const TabletSize = useResizeHook();
   const LoggedIn = useLoggedIn();
+  const TabletSize = useResizeHook();
   const navigate = useNavigate();
+  const location = useLocation();
   let payload = useSelector((store) => store.authSlice.payload);
+  let currentCategory = useSelector((state) => state.categorySlice.theCategory);
+
+  if (currentCategory !== null) {
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set("category", currentCategory);
+
+    const newUrl = `${location.pathname}?${queryParams.toString()}`;
+    window.history.replaceState(null, "", newUrl);
+  }
 
   useEffect(() => {
     LoggedIn();
@@ -38,12 +49,19 @@ const EarringsPage = () => {
       .then(({ data }) => {
         filterFunc(data);
       })
-
       .catch((err) => {
-        console.log("err from axios", err.response.data);
+        console.log("err from axios", err);
         toast.error(err.response.data);
       });
+    /* 
+    // Update the URL with the currentCategory parameter
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set("", currentCategory);
+
+    const newUrl = `${location.pathname}?${queryParams.toString()}`;
+    window.history.replaceState(null, "", newUrl); */
   }, []);
+
   const filterFunc = (data) => {
     let dataToSearch = originalCardsArr || data;
     if (!dataToSearch) {
@@ -58,25 +76,26 @@ const EarringsPage = () => {
     filterFunc();
   }, [searchParams.filter]);
   if (!payload) {
-    console.log("hkfgjh");
     let payload = {};
     payload.isBusiness = false;
     payload.isAdmin = false;
   }
- const idUser = payload ? payload._id : null;
-  console.log(idUser);
+  const idUser = payload ? payload._id : null;
 
+  /* if (!idUser) {
+    return;
+  } */
   if (!cardsArr) {
     return <CircularProgress />;
   }
 
   const moveToCardPage = (id) => {
-    console.log("id", id);
     navigate(`/card/${id}`);
   };
   const moveToEditPage = (id) => {
     navigate(`/edit/${id}`);
   };
+
   const changeTableToCards = () => {
     setShowTable(true);
     setShowCards(false);
@@ -90,25 +109,24 @@ const EarringsPage = () => {
     try {
       const { data } = await axios.get("/cards");
       setCardsArr(data);
-      console.log("data", data);
     } catch (err) {
       console.log("Error fetching updated card list", err);
     }
   };
   const deleteCardFromInitialCardsArr = async (id) => {
     try {
-      console.log("id", id);
       setCardsArr((cardsArr) => cardsArr.filter((item) => item._id != id));
-      console.log("cardsArr", cardsArr);
       await axios.delete("cards/" + id);
     } catch (err) {
       console.log("error when deleting", err.response.data);
     }
   };
+
   return (
     <Box>
       <CssBaseline />
-      <h1 style={{ fontFamily: "Pangolin" }}>Earrings</h1>
+      <h1 style={{ fontFamily: "Pangolin" }}>{currentCategory}</h1>
+
       <Box
         style={{
           display: "flex",
@@ -118,7 +136,7 @@ const EarringsPage = () => {
       >
         {!TabletSize && (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <h2>Here You Can See Our Beutiful Earrings:</h2>
+            <h2>Here You Can See Our Beutiful {currentCategory}</h2>
           </div>
         )}
         <SortHeader
@@ -128,14 +146,14 @@ const EarringsPage = () => {
           onStrDescending={() => setCardsArr(strDescending(cardsArr))}
           onChangeTableToCards={() => changeTableToCards()}
           onChangeCardsToTable={() => changeCardsToTable()}
-        />{" "}
+        />
       </Box>
       <Grid container spacing={2}>
         {cardsArr &&
           cardsArr
-            .filter((item) => item.category === "earrings")
+            .filter((item) => item.category === currentCategory)
             .map((item) => (
-              <Grid item xs={12} key={item._id + Date.now()}>
+              <Grid item xs={12} key={item._id}>
                 {ShowTable && !TabletSize && (
                   <TableComponent
                     likes={item.likes}
@@ -161,9 +179,9 @@ const EarringsPage = () => {
             ))}
         {cardsArr &&
           cardsArr
-            .filter((item) => item.category === "earrings")
+            .filter((item) => item.category === currentCategory)
             .map((item) => (
-              <Grid item xs={12} sm={6} md={4} key={item._id + Date.now()}>
+              <Grid item xs={12} sm={6} md={4} key={item._id}>
                 {ShowCards || (!ShowCards && TabletSize) ? (
                   <CardComponent
                     likes={item.likes}
@@ -191,5 +209,4 @@ const EarringsPage = () => {
     </Box>
   );
 };
-export default EarringsPage;
- */
+export default CategoryPage;

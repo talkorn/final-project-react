@@ -23,15 +23,18 @@ import UserPage from "../pages/UserPage";
 import AboutPage from "../pages/AboutPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 import ContactPage from "../pages/ContactPage";
+import CategoryPage from "../pages/CategoryPage";
+import FavoriteManagement from "../pages/FavoriteManagement";
 const Router = () => {
   return (
     <Container maxWidth="xl">
       <Routes>
         <Route path={ROUTES.HOME} element={<HomePage />} />
         <Route path={ROUTES.ABOUT} element={<AboutPage />} />
-        <Route path={ROUTES.NECKLACES} element={<NecklacesPage />} />
-        <Route path={ROUTES.EARRINGS} element={<EarringsPage />} />
-        <Route path={ROUTES.BRACELETS} element={<BraceletsPage />} />
+        {/* <Route path={ROUTES.NECKLACES} element={<NecklacesPage />} />
+        <Route path={ROUTES.EARRINGS} element={<EarringsPage />} />*/}
+
+        <Route path={ROUTES.CATEGORY} element={<CategoryPage />} />
         <Route path={ROUTES.SIGNUP} element={<SignUpPage />} />
         <Route path="/card/:id" element={<CardPage />} />
         <Route
@@ -95,6 +98,16 @@ const Router = () => {
               isAdmin={true}
               isBiz={false}
               element={<CrmTable />}
+            />
+          }
+        />
+        <Route
+          path={ROUTES.FAVMANG}
+          element={
+            <SuperProtectedRoute
+              isAdmin={true}
+              isBiz={false}
+              element={<FavoriteManagement />}
             />
           }
         />
