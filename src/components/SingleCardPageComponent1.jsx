@@ -26,7 +26,7 @@ const SingleCardPageComponent = ({
   category,
   colors,
   img,
-
+  stock,
   price,
   bizNumber,
   createdAt,

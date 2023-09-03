@@ -128,6 +128,7 @@ const HomePage = () => {
                 subTitle={item.subTitle}
                 description={item.description}
                 price={item.price}
+                stock={item.stock}
                 img={item.image.url}
                 bizNumber={item.bizNumber}
                 onEdit={moveToEditPage}
@@ -156,6 +157,7 @@ const HomePage = () => {
                 subTitle={item.subTitle}
                 description={item.description}
                 price={item.price}
+                stock={item.stock}
                 img={item.image.url}
                 bizNumber={item.bizNumber}
                 onEdit={moveToEditPage}

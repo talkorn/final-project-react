@@ -42,6 +42,7 @@ const CardPage = () => {
     /*  subTitle: "", */
     description: "",
     price: "",
+    stock: "",
     category: "",
     colors: "",
     /* email: "",
@@ -69,19 +70,20 @@ const CardPage = () => {
     setInputsErrorsState(joiResponse);
     if (
       inputState &&
-      /* !joiResponse &&
+      !joiResponse &&
       inputState.title &&
       inputState.price &&
-      inputState.image.url && */
-      //inputState.image.alt &&
-      /*  inputState.subTitle &&
+      inputState.stock &&
+      inputState.image.url &&
+      inputState.image.alt &&
+      /* inputState.subTitle &&
       inputState.phone && 
       inputState.country &&
       inputState.email &&
       inputState.web &&
-      inputState.city &&
-      inputState.street &&
-      inputState.houseNumber &&*/
+      inputState.city &&*/
+      inputState.category &&
+      inputState.colors &&
       inputState.description
     ) {
       setButtonValid(true);
@@ -179,6 +181,8 @@ const CardPage = () => {
               //{ description: "image.alt", required: false },
 
               { description: "price", required: true },
+              { description: "stock", required: true },
+
               { description: "category", required: true },
               { description: "colors", required: true },
             ].map((props, index) => (

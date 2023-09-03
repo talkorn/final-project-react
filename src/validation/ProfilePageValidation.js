@@ -12,13 +12,15 @@ const profileSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required(),
+  imageFile: Joi.string().min(1).max(255),
   image: Joi.object().keys({
     url: Joi.string().regex(
       new RegExp(
-        /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
+        /(?:^|\s)((https?:\/\/)?(?:localhost|[\w-]+(?:\.[\w-]+)+)(:\d+)?(\/\S*)?)/
       )
     ),
     alt: Joi.string().min(2).max(256).required(),
+    file: Joi.object().min(0).max(255),
   }),
   address: Joi.object()
     .required()

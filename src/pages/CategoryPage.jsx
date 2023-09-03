@@ -163,6 +163,7 @@ const CategoryPage = () => {
                     title={item.title}
                     description={item.description}
                     price={item.price}
+                    stock={item.stock}
                     category={item.category}
                     colors={item.colors}
                     img={item.image.url}
@@ -191,6 +192,7 @@ const CategoryPage = () => {
                     title={item.title}
                     description={item.description}
                     price={item.price}
+                    stock={item.stock}
                     category={item.category}
                     colors={item.colors}
                     img={item.image.url}

@@ -49,6 +49,7 @@ function ResponsiveAppBar() {
   const logoutClick = () => {
     localStorage.clear();
     dispatch(authActions.logout());
+    handleCloseNavMenu();
     toast.success("You've been signed out");
   };
   const handleChangeCategory = (newCategory) => {
@@ -195,7 +196,11 @@ function ResponsiveAppBar() {
                     )
                   )
                 : notAuthPages.map((page) => (
-                    <NavLinkComponent key={page.url} {...page} />
+                    <NavLinkComponent
+                      onClick={handleCloseNavMenu}
+                      key={page.url}
+                      {...page}
+                    />
                   ))}
             </Menu>
           </Box>

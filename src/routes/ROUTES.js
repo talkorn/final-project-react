@@ -16,5 +16,6 @@ const ROUTES = {
   CONTACT: "/Contact",
   CATEGORY: "/category",
   FAVMANG: "/FavoriteManagement",
+  INVENTORY: "/InventoryManagement",
 };
 export default ROUTES;

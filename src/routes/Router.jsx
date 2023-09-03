@@ -25,6 +25,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import ContactPage from "../pages/ContactPage";
 import CategoryPage from "../pages/CategoryPage";
 import FavoriteManagement from "../pages/FavoriteManagement";
+import InventoryManagement from "../pages/inventoryManagement";
 const Router = () => {
   return (
     <Container maxWidth="xl">
@@ -108,6 +109,16 @@ const Router = () => {
               isAdmin={true}
               isBiz={false}
               element={<FavoriteManagement />}
+            />
+          }
+        />
+        <Route
+          path={ROUTES.INVENTORY}
+          element={
+            <SuperProtectedRoute
+              isAdmin={true}
+              isBiz={false}
+              element={<InventoryManagement />}
             />
           }
         />

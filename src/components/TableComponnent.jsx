@@ -36,6 +36,7 @@ const TableComponent = ({
   idUser,
   img,
   price,
+  stock,
   bizNumber,
   likes,
 

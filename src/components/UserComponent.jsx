@@ -12,7 +12,7 @@ const UserComponent = (userArr) => {
   const nestedProperty = descriptions
     .split(".")
     .reduce((obj, key) => obj[key], inputStates);
-  console.log(userArr);
+
   return (
     <Fragment>
       <TextField

@@ -22,6 +22,7 @@ const CardComponent = ({
   idUser,
   img,
   price,
+  stock,
   bizNumber,
   onClick,
   onEdit,
@@ -67,12 +68,21 @@ const CardComponent = ({
         <Typography variant="body2" color="text.secondary">
           {"Colors: "} {colors}
         </Typography>
-
-        {/*  <Typography variant="body2" color="text.secondary">
-          {"Card Number: "}
-          {bizNumber}
-        </Typography> */}
-      </CardContent>
+      </CardContent>{" "}
+      {stock <= 1 ? (
+        <Typography
+          variant="body2"
+          color="error"
+          fontWeight="bold"
+          fontSize="1.5rem"
+        >
+          Sold Out
+        </Typography>
+      ) : (
+        <Button variant="contained" color="primary">
+          Buy Now
+        </Button>
+      )}
       <CardActions>
         {canDelete || (canEdit && cardIdUser === idUser) ? (
           <Button size="small" onClick={() => onDelete(id)}>

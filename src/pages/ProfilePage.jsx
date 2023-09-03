@@ -18,11 +18,32 @@ import validateProfileSchema from "../validation/ProfilePageValidation";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useSelector } from "react-redux";
 
+const SERVER_BASE_URL = "http://localhost:8181/";
 const ProfilePage = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+
   const payload = useSelector((store) => store.authSlice.payload);
-  const [inputsErrorsState, setInputsErrorsState] = useState("");
+  const [inputsErrorsState, setInputsErrorsState] = useState({});
   const [buttonValid, setButtonValid] = useState(false);
-  const [inputState, setInputState] = useState("");
+  const [inputState, setInputState] = useState({
+    name: {
+      first: "",
+      middle: "",
+      last: "",
+    },
+    phone: "",
+    email: "",
+    address: {
+      state: "",
+      country: "",
+      city: "",
+      street: "",
+      houseNumber: "",
+      zip: "",
+    },
+    image: { url: "", alt: "Profile Image" }, // Include image property
+  });
   const [initialnputState, setInitialnputState] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -71,37 +92,83 @@ const ProfilePage = () => {
   }, [inputState]);
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    console.log("inputsErrorsState", inputsErrorsState);
     try {
       if (inputsErrorsState) {
         return;
       }
 
       const id = payload._id;
-      await axios.put(`users/${id}`, inputState);
+      let updatedInputState = { ...inputState };
+
+      if (selectedImage) {
+        const formData = new FormData();
+        formData.append("image", selectedImage);
+
+        const { data } = await axios.post(`users/${id}/image`, formData);
+
+        updatedInputState = {
+          ...updatedInputState,
+          image: {
+            url: "http://localhost:8181/" + data.imageUrl,
+            alt: "Profile Image",
+          },
+        };
+      }
+
+      await axios.put(`users/${id}`, updatedInputState);
       navigate(ROUTES.HOME);
     } catch (err) {
       console.log("error from axios", err.response.data);
     }
   };
 
-  const handleInputChange = (ev) => {
-    const { id, value } = ev.target;
-    console.log(id);
-    let newInputState = JSON.parse(JSON.stringify(inputState));
+  /* const handleInputChange = (ev) => {
+    const { id, value, files } = ev.target;
+    let newInputState = { ...inputState };
+
     if (typeof id === "string" && id.includes(".")) {
       const [nestedProperty, nestedKey] = id.split(".");
       newInputState[nestedProperty][nestedKey] = value;
-      console.log(typeof newInputState[nestedProperty][nestedKey]);
     } else {
-      console.log(" newInputState[id]", newInputState[id]);
-      console.log(" value", value);
       newInputState[id] = value;
-      console.log(" newInputState.id", newInputState.id);
-      console.log(" newInputState", newInputState);
+    }
+
+    if (files && files[0]) {
+      setSelectedImage(files[0]);
+      console.log(files[0]);
+      const formData11 = new FormData();
+      formData11.append("image", selectedImage);
+    }
+
+    setInputState(newInputState);
+  }; */
+  const handleInputChange = (ev) => {
+    const { id, value, files } = ev.target;
+    let newInputState = { ...inputState };
+
+    if (typeof id === "string" && id.includes(".")) {
+      const [nestedProperty, nestedKey] = id.split(".");
+      newInputState[nestedProperty][nestedKey] = value;
+    } else {
+      newInputState[id] = value;
+    }
+
+    if (files && files[0]) {
+      setSelectedImage(files[0]);
+
+      // Create a preview URL for the selected image
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(files[0]);
     }
 
     setInputState(newInputState);
   };
+
   const resetButton = () => {
     setInputState(initialnputState);
   };
@@ -131,8 +198,8 @@ const ProfilePage = () => {
         <CardMedia
           component="img"
           sx={{ height: 140 }}
-          image={inputState.image.url}
-          title={inputState.image.title}
+          image={imagePreviewUrl || inputState.image.url}
+          title={inputState.image.alt}
         />{" "}
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -161,6 +228,19 @@ const ProfilePage = () => {
                 />
               </Grid>
             ))}
+            <input
+              accept="image/*"
+              id="imageFile"
+              type="file"
+              onChange={handleInputChange}
+              style={{ display: "none" }}
+            />
+            <label htmlFor="imageFile">
+              <Button component="span" variant="outlined" color="primary">
+                Upload Image
+              </Button>
+            </label>
+
             <Stack xs={12} sx={{ m: 2 }} spacing={2} direction="row">
               <Button onClick={cancleButoon} variant="outlined" color="error">
                 Cancle

@@ -138,6 +138,7 @@ const MyCardsPage = () => {
                 subTitle={item.subTitle}
                 description={item.description}
                 price={item.price}
+                stock={item.stock}
                 colors={item.colors}
                 category={item.category}
                 img={item.image.url}

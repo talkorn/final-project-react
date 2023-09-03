@@ -91,7 +91,21 @@ const CardPage = () => {
     if (
       inputState &&
       !joiResponse &&
-      inputState.title /* &&
+      inputState.title &&
+      inputState.price &&
+      inputState.stock &&
+      inputState.image.url &&
+      inputState.image.alt &&
+      /* inputState.subTitle &&
+      inputState.phone && 
+      inputState.country &&
+      inputState.email &&
+      inputState.web &&
+      inputState.city &&*/
+      inputState.category &&
+      inputState.colors &&
+      inputState.description
+      /* &&
        inputState.subTitle &&
       inputState.phone &&
       inputState.country &&
@@ -119,9 +133,26 @@ const CardPage = () => {
     }
   };
   const handleInputChange = (ev) => {
+    const { id, value } = ev.target;
+    let newInputState = JSON.parse(JSON.stringify(inputState));
+    if (typeof id === "string" && id.includes(".")) {
+      const [nestedProperty, nestedKey] = id.split(".");
+      newInputState[nestedProperty][nestedKey] = value;
+      console.log(typeof newInputState[nestedProperty][nestedKey]);
+    } else {
+      console.log(" newInputState[id]", newInputState[id]);
+      console.log(" value", value);
+      newInputState[id] = value;
+      console.log(" newInputState.id", newInputState.id);
+      console.log(" newInputState", newInputState);
+    }
+    /*  let newInputState = JSON.parse(JSON.stringify(inputState));
+    newInputState[ev.target.id] = ev.target.value; */
+    setInputState(newInputState);
+    /* 
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
-    setInputState(newInputState);
+    setInputState(newInputState); */
   };
   const resetButton = () => {
     setInputState(initialnputState);
@@ -168,6 +199,7 @@ const CardPage = () => {
               /* { description: "subTitle", required: true }, */
               { description: "description", required: true },
               { description: "price", required: true },
+              { description: "stock", required: true },
               { description: "category", required: true },
               { description: "colors", required: true },
               /*   { description: "phone", required: true },
