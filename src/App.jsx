@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import useLoggedIn from "./hooks/useLoggedIn";
 import SimpleBottomNavigation from "./components/Footer1";
 import NameHeader from "./components/header";
+
 const light = {
   palette: {
     mode: "light",

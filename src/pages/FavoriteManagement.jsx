@@ -9,12 +9,10 @@ import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
+
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
+
 import { Grid } from "@mui/material";
 import validateProfileSchema from "../validation/ProfilePageValidation";
 
@@ -55,43 +53,7 @@ const FavoriteManagement = () => {
                 <TableCell align="center">user id</TableCell>
               </TableRow>
             </TableHead>
-            {/*  <TableBody>
-              {initialData &&
-                initialData.map((row) => (
-                  <TableRow
-                    key={row._id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      <TableCell align="right">{row.title}</TableCell>
-                    </TableCell>
 
-                    <TableCell align="right">
-                      {" "}
-                      <TableCell align="right">{row._id}</TableCell>
-                    </TableCell>
-
-                    <TableCell align="right">
-                      <TableCell align="right">{likesNumber}</TableCell>
-                    </TableCell>
-                    <TableCell align="right">
-                      <TableCell align="right">{row.category}</TableCell>
-                    </TableCell>
-                    <TableCell align="right">
-                      <TableCell align="right">{row.colors}</TableCell>
-                    </TableCell>
-                    <TableCell align="right">
-                      <TableCell align="right">{row.price}</TableCell>
-                    </TableCell>
-                    <TableCell align="right">
-                      <TableCell align="right">{row.user_id}</TableCell>
-                    </TableCell>
-
-                    <TableCell align="right"></TableCell>
-                    <TableCell align="right"></TableCell>
-                  </TableRow>
-                ))}
-            </TableBody> */}
             <TableBody>
               {initialData &&
                 sortByLikes(initialData).map((row) => (
@@ -100,32 +62,14 @@ const FavoriteManagement = () => {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      <TableCell align="right">{row.title}</TableCell>
+                      {row.title}
                     </TableCell>
-
-                    <TableCell align="right">
-                      <TableCell align="right">{row._id}</TableCell>
-                    </TableCell>
-
-                    <TableCell align="right">
-                      <TableCell align="right">{row.likes.length}</TableCell>
-                    </TableCell>
-
-                    <TableCell align="right">
-                      <TableCell align="right">{row.category}</TableCell>
-                    </TableCell>
-                    <TableCell align="right">
-                      <TableCell align="right">{row.colors}</TableCell>
-                    </TableCell>
-                    <TableCell align="right">
-                      <TableCell align="right">{row.price}</TableCell>
-                    </TableCell>
-                    <TableCell align="right">
-                      <TableCell align="right">{row.user_id}</TableCell>
-                    </TableCell>
-
-                    <TableCell align="right"></TableCell>
-                    <TableCell align="right"></TableCell>
+                    <TableCell align="right">{row._id}</TableCell>
+                    <TableCell align="right">{row.likes.length}</TableCell>
+                    <TableCell align="right">{row.category}</TableCell>
+                    <TableCell align="right">{row.colors}</TableCell>
+                    <TableCell align="right">{row.price}</TableCell>
+                    <TableCell align="right">{row.user_id}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

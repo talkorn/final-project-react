@@ -97,6 +97,7 @@ const MyCardsPage = () => {
       <CssBaseline />
       <h1>Cards Page</h1>
       <h2>Here You Can Find All your Buisness Cards</h2>
+      <h3>To add a new card, click on the blue button to your left</h3>
       <SortHeader
         onNumAscending={() => setCardsArr(numAscending(cardsArr))}
         onNumDescending={() => setCardsArr(numDescending(cardsArr))}

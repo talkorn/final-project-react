@@ -21,7 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ShortTYpographyComponnent from "../ShortTYpographyComponnent";
 import CheckboxComponnent from "../CheckboxComponnent";
 import { categoryActions } from "../../store/category";
-
+import NavBarInventory from "../MangementNavBar";
 const notAuthPages = [
   { label: "SignUp", url: ROUTES.SIGNUP },
   { label: "Login", url: ROUTES.LOGIN },
@@ -64,14 +64,6 @@ function ResponsiveAppBar() {
           <CheckboxComponnent style={{ color: "black" }} />{" "}
           <ShortTYpographyComponnent />
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            {/*  <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="black"
-            ></IconButton> */}
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -131,14 +123,7 @@ function ResponsiveAppBar() {
                   onClick={handleCloseNavMenu}
                 />
               )}
-              {payload && (payload.isAdmin || payload.isBusiness) && (
-                <NavLinkComponent
-                  key={ROUTES.SANDBOX}
-                  url={ROUTES.SANDBOX}
-                  label="Sandbox"
-                  onClick={handleCloseNavMenu}
-                />
-              )}
+
               {payload && payload.isBusiness && (
                 <NavLinkComponent
                   key={ROUTES.MYCARDS}
@@ -147,21 +132,9 @@ function ResponsiveAppBar() {
                   onClick={handleCloseNavMenu}
                 />
               )}
+
               {payload && payload.isAdmin && (
-                <NavLinkComponent
-                  key={ROUTES.CRM}
-                  url={ROUTES.CRM}
-                  label="CRM"
-                  onClick={handleCloseNavMenu}
-                />
-              )}
-              {payload && payload.isAdmin && (
-                <NavLinkComponent
-                  key={ROUTES.FAVMANG}
-                  url={ROUTES.FAVMANG}
-                  label="FAVMANG"
-                  onClick={handleCloseNavMenu}
-                />
+                <NavBarInventory handleCloseNavMenu={handleCloseNavMenu} />
               )}
               {isLoggedIn
                 ? authedPages.map((settings) =>
@@ -224,21 +197,12 @@ function ResponsiveAppBar() {
             {isLoggedIn && (
               <NavLinkComponent url={ROUTES.FAVCARDS} label="Favorite" />
             )}
-            {payload && (payload.isAdmin || payload.isBusiness) && (
-              <NavLinkComponent url={ROUTES.SANDBOX} label="Sandbox" />
-            )}
             {payload && payload.isBusiness && (
               <NavLinkComponent url={ROUTES.MYCARDS} label="MY Cards" />
             )}
+
             {payload && payload.isAdmin && (
-              <NavLinkComponent key={ROUTES.CRM} url={ROUTES.CRM} label="CRM" />
-            )}
-            {payload && payload.isAdmin && (
-              <NavLinkComponent
-                key={ROUTES.FAVMANG}
-                url={ROUTES.FAVMANG}
-                label="FAVMANG"
-              />
+              <NavBarInventory handleCloseNavMenu={handleCloseNavMenu} />
             )}
           </Box>
           <SearchFromNav />

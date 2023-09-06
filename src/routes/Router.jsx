@@ -74,13 +74,13 @@ const Router = () => {
         />
         <Route
           path={ROUTES.MYCARDS}
-          element={<MyCardsPage />} /* {
+          element={
             <SuperProtectedRoute
               isAdmin={false}
               isBiz={true}
-              element={<MyCardsPage />} 
-        />
-        }*/
+              element={<MyCardsPage />}
+            />
+          }
         />
         <Route
           path="/user/:id"

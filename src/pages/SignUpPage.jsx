@@ -92,8 +92,20 @@ const SignUpPage = () => {
       inputState.name.first = inputState.firstName;
       inputState.name.last = inputState.lastName;
       inputState.name.middle = inputState.middleName;
-      inputState.image.url = inputState.imageUrl;
-      inputState.image.alt = inputState.imageAlt;
+      if (inputState.imageUrl) {
+        inputState.image.url = inputState.imageUrl;
+      } else {
+        inputState.image.url =
+          "https://img.freepik.com/premium-vector/blue-green-circle-with-person-icon-it_816425-2573.jpg?w=826";
+      }
+      if (inputState.imageAlt) {
+        inputState.image.alt = inputState.imageAlt;
+      } else {
+        inputState.image.alt = "ramiProfile";
+      }
+      if (!inputState.address.state) {
+        inputState.address.state = "    ";
+      }
       delete inputState.imageUrl;
       delete inputState.imageAlt;
       delete inputState.firstName;

@@ -17,8 +17,9 @@ import CardMedia from "@mui/material/CardMedia";
 import validateProfileSchema from "../validation/ProfilePageValidation";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const SERVER_BASE_URL = "http://localhost:8181/";
 const ProfilePage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
@@ -68,7 +69,7 @@ const ProfilePage = () => {
         console.log("error from axios", err.response.data);
       }
     })();
-  }, []);
+  }, [payload._id]);
   useEffect(() => {
     const joiResponse = validateProfileSchema(inputState);
     setInputsErrorsState(joiResponse);
@@ -118,8 +119,10 @@ const ProfilePage = () => {
       }
 
       await axios.put(`users/${id}`, updatedInputState);
+      toast.success("Profile update completed");
       navigate(ROUTES.HOME);
     } catch (err) {
+      toast.error(err.response.data);
       console.log("error from axios", err.response.data);
     }
   };
