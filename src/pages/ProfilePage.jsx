@@ -23,7 +23,6 @@ import "react-toastify/dist/ReactToastify.css";
 const ProfilePage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-
   const payload = useSelector((store) => store.authSlice.payload);
   const [inputsErrorsState, setInputsErrorsState] = useState({});
   const [buttonValid, setButtonValid] = useState(false);
@@ -47,6 +46,7 @@ const ProfilePage = () => {
   });
   const [initialnputState, setInitialnputState] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     (async () => {
       try {

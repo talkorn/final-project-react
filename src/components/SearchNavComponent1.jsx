@@ -64,7 +64,7 @@ const SearchFromNav = () => {
     navigate(`${pathname}?filter=${value}`);
   };
   return (
-    <Box sx={{ float: "right", width: { xs: "100%", sm: "16.666%" }, m: 1 }}>
+    <Box sx={{ float: "right", width: { xs: "80%", sm: "12%" }, m: 1 }}>
       <Search>
         <SearchIconWrapper>
           <SearchIcon />

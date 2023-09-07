@@ -35,7 +35,10 @@ const NavBarInventory = ({ handleCloseNavMenu }) => {
           my: 2,
           display: "block",
           p: 2,
-          fontSize: "1rem",
+          fontSize: "1.2rem",
+          "@media (max-width: 1040px) and (min-width: 800px)": {
+            fontSize: "0.88rem",
+          },
         }}
       >
         Management
@@ -71,33 +74,5 @@ const NavBarInventory = ({ handleCloseNavMenu }) => {
     </div>
   );
 };
-/* 
-const navBarStyle = {
-  backgroundColor: "grey",
-  position: "fixed", // Set the position to "fixed"
-  top: 0, // Adjust this value to control the distance from the top
-};
-
-const NavBarInventory = () => {
-  return (
-    <Container maxWidth="xl">
-      <Toolbar disableGutters>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <NavLinkComponent
-            key={ROUTES.INVENTORY}
-            url={ROUTES.INVENTORY}
-            label="INVENTORY"
-          />
-          <NavLinkComponent
-            key={ROUTES.FAVMANG}
-            url={ROUTES.FAVMANG}
-            label="FAVMANG"
-          />
-          <NavLinkComponent key={ROUTES.CRM} url={ROUTES.CRM} label="CRM" />
-        </Box>
-      </Toolbar>
-    </Container>
-  );
-}; */
 
 export default NavBarInventory;

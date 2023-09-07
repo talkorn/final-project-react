@@ -22,6 +22,8 @@ import ShortTYpographyComponnent from "../ShortTYpographyComponnent";
 import CheckboxComponnent from "../CheckboxComponnent";
 import { categoryActions } from "../../store/category";
 import NavBarInventory from "../MangementNavBar";
+import { useState, useEffect } from "react";
+import axios from "axios";
 const notAuthPages = [
   { label: "SignUp", url: ROUTES.SIGNUP },
   { label: "Login", url: ROUTES.LOGIN },
@@ -31,21 +33,51 @@ const authedPages = [
   { label: "Logout", url: ROUTES.LOGOUT },
 ];
 function ResponsiveAppBar() {
+  const [anchorElAvatar, setAnchorElAvatar] = useState(null);
   const payload = useSelector((store) => store.authSlice.payload);
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
   );
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [userPicture, setUserPicture] = useState(null);
   const dispatch = useDispatch();
-  const currentCategory = useSelector(
+  /*  const currentCategory = useSelector(
     (state) => state.categorySlice.theCategory
-  );
+  ); */
+  useEffect(() => {
+    (async () => {
+      try {
+        let id;
+        if (payload) {
+          id = payload._id;
+        } else {
+          return;
+        }
+        const { data } = await axios.get(`users/${id}`);
+        let newInputState = {
+          ...data,
+        };
+        setUserPicture(newInputState.image);
+        console.log("newInputState", newInputState);
+      } catch (err) {
+        console.log("error from axios", err.response.data);
+      }
+    })();
+  }, [payload]);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+  const handleOpenAvatarMenu = (event) => {
+    setAnchorElAvatar(event.currentTarget);
+  };
+
+  const handleCloseAvatarMenu = () => {
+    setAnchorElAvatar(null);
+  };
+
   const logoutClick = () => {
     localStorage.clear();
     dispatch(authActions.logout());
@@ -58,12 +90,17 @@ function ResponsiveAppBar() {
   };
   return (
     <AppBar position="static" sx={{ backgroundColor: "white" }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ marginTop: 0 }}>
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <CheckboxComponnent style={{ color: "black" }} />{" "}
-          <ShortTYpographyComponnent />
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <ShortTYpographyComponnent sx={{ margin: "0" }} />
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+            }}
+          >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -205,8 +242,7 @@ function ResponsiveAppBar() {
               <NavBarInventory handleCloseNavMenu={handleCloseNavMenu} />
             )}
           </Box>
-          <SearchFromNav />
-          <Box sx={{ flexGrow: 0 }}>
+          {/*  <Box sx={{ flexGrow: 0 }}>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {isLoggedIn
                 ? authedPages.map((page) =>
@@ -225,7 +261,7 @@ function ResponsiveAppBar() {
                     <NavLinkComponent key={page.url} {...page} />
                   ))}
 
-              <IconButton sx={{ p: 0 }}>
+              <IconButton sx={{ p: 0 }} onClick={handleOpenAvatarMenu}>
                 <Avatar
                   alt="Remy Sharp"
                   src="https://img.freepik.com/premium-vector/blue-green-circle-with-person-icon-it_816425-2573.jpg?w=826"
@@ -233,9 +269,76 @@ function ResponsiveAppBar() {
               </IconButton>
             </Box>
           </Box>
-        </Toolbar>{" "}
+        </Toolbar> */}
+          <SearchFromNav />
+          <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {isLoggedIn ? (
+                <>
+                  {/* Avatar icon with associated menu */}
+                  <IconButton
+                    sx={{ p: 0 }}
+                    onClick={handleOpenAvatarMenu} // Open avatar menu on click
+                  >
+                    <Avatar
+                      alt={userPicture ? userPicture.alt : "Remy Sharp"}
+                      src={
+                        userPicture
+                          ? userPicture.url
+                          : "https://img.freepik.com/premium-vector/blue-green-circle-with-person-icon-it_816425-2573.jpg?w=826"
+                      }
+                    />
+                  </IconButton>
+                  <Menu
+                    id="menu-avatar"
+                    anchorEl={anchorElAvatar}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElAvatar)}
+                    onClose={handleCloseAvatarMenu}
+                  >
+                    {/* Profile and Logout items */}
+                    <div>
+                      {authedPages.map((page) =>
+                        page.url === ROUTES.LOGOUT ? (
+                          <MenuItem
+                            key={page.url}
+                            onClick={() => {
+                              handleCloseAvatarMenu();
+                              logoutClick();
+                            }}
+                          >
+                            {page.label}
+                          </MenuItem>
+                        ) : (
+                          <NavLinkComponent
+                            key={page.url}
+                            {...page}
+                            onClick={handleCloseAvatarMenu}
+                          />
+                        )
+                      )}
+                    </div>
+                  </Menu>
+                </>
+              ) : (
+                notAuthPages.map((page) => (
+                  <NavLinkComponent key={page.url} {...page} />
+                ))
+              )}
+            </Box>
+          </Box>
+        </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
 export default ResponsiveAppBar;
