@@ -8,21 +8,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { Grid } from "@mui/material";
-import validateProfileSchema from "../validation/ProfilePageValidation";
-
 import "react-toastify/dist/ReactToastify.css";
+
 const FavoriteManagement = () => {
-  const [initialCards, setIntialCardsData] = useState(null);
   const [initialData, setIntialData] = useState(null);
-  const [buttonValid, setButtonValid] = useState(false);
-  const [inputsErrorsState, setInputsErrorsState] = useState(null);
-  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
       try {
@@ -39,6 +30,7 @@ const FavoriteManagement = () => {
   };
   return (
     <Grid container spacing={2}>
+      <h1 style={{ fontFamily: "Pangolin" }}>Favorite Data</h1>
       <Grid item xs={12}>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

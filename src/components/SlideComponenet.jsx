@@ -46,7 +46,7 @@ const Slideshow = () => {
       };
     } else {
       return {
-        width: "70%",
+        width: "95%",
         height: "30rem",
       };
     }

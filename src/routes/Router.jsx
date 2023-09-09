@@ -9,14 +9,9 @@ import EditPage from "../pages/EditPage";
 import FavoritePage from "../pages/Favorite";
 import AddCardPage from "../pages/AddCard";
 import MyCardsPage from "../pages/MyCards";
-import NecklacesPage from "../pages/NecklacesPage";
-import EarringsPage from "../pages/EarringsPage";
-import BraceletsPage from "../pages/BraceletPage";
+
 import SuperProtectedRoute from "../components/SuperProtectedRoute";
-import SandBoxPage from "../pages/SandBoxPage";
-import NestedPage1 from "../pages/NestesPage1";
-import NestedPage2 from "../pages/NestedPage2";
-import NestedPage3 from "../pages/NestedPage3";
+
 import ProfilePage from "../pages/ProfilePage";
 import CrmTable from "../pages/CrmPage";
 import UserPage from "../pages/UserPage";
@@ -54,29 +49,39 @@ const Router = () => {
           element={
             <SuperProtectedRoute
               isAdmin={true}
-              isBiz={true}
+              isBiz={false}
               element={<EditPage />}
             />
           }
         />
-        <Route
+        {/*  <Route
           path={ROUTES.ADDCARD}
           element={<AddCardPage />}
-
-          /*  <Route
+/>
+           <Route
           path={ROUTES.ADDCARD}
           element={
             <SuperProtectedRoute
               isAdmin={false}
               isBiz={true}
               element={<AddCardPage />}
-            /> */
+            /> 
+        /> */}
+        <Route
+          path={ROUTES.ADDCARD}
+          element={
+            <SuperProtectedRoute
+              isAdmin={true}
+              isBiz={true}
+              element={<AddCardPage />}
+            />
+          }
         />
         <Route
           path={ROUTES.MYCARDS}
           element={
             <SuperProtectedRoute
-              isAdmin={false}
+              isAdmin={true}
               isBiz={true}
               element={<MyCardsPage />}
             />
@@ -126,15 +131,7 @@ const Router = () => {
           path={ROUTES.PROFILE}
           element={<ProtectedRoute element={<ProfilePage />} />}
         />
-        <Route
-          path={"/sandbox"}
-          element={<ProtectedRoute element={<SandBoxPage />} />}
-        >
-          <Route path="nestedpage1" element={<NestedPage1 />} />
-          <Route path="nestedpage2" element={<NestedPage2 />} />
-          <Route path="nestedpage3" element={<NestedPage3 />} />
-          <Route path="*" element={<h1>404</h1>} />
-        </Route>
+        <Route path="*" element={<h1>404</h1>} />
       </Routes>
     </Container>
   );

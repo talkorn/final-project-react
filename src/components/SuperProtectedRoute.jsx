@@ -5,7 +5,6 @@ import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 
 const SuperProtectedRoute = ({ element, isAdmin, isBiz }) => {
-  //* logic section
   const isLoggedIn = useSelector((store) => store.authSlice.isLoggedIn);
   const payload = useSelector((store) => store.authSlice.payload);
   //* html section
@@ -18,9 +17,8 @@ const SuperProtectedRoute = ({ element, isAdmin, isBiz }) => {
       }
     }
   } else {
-    toast.error("invalid permissions");
   }
-
+  toast.error("invalid permissions");
   return <Navigate to={ROUTES.LOGIN} />;
 };
 SuperProtectedRoute.propTypes = {

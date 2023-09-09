@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 const AboutPage = () => {
   return (
     <Box>
-      <h1>Welcome to Tal's Cards</h1>
+      <h1 style={{ fontFamily: "Pangolin" }}>Welcome to Tal's Cards</h1>
       <p>
         Tal's Card is a unique web platform dedicated to showcasing a vast
         collection of business cards from around the world.

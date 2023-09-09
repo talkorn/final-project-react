@@ -47,7 +47,7 @@ const SingleCardPageComponent = ({
     try {
       let users = await axios.get(`/cards/`);
       users = users.data;
-      await axios.patch(`/cards/bizNumber/${id}`);
+      await axios.patch(`/cards/biz/${id}`);
       const { data } = await axios.get(`/cards/${id}`);
       const newData = { ...data };
 
@@ -101,49 +101,59 @@ const SingleCardPageComponent = ({
           {"createdAte: "} {createdAt}
         </Typography>
         <Typography variant="body2" color="text.secondary"></Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          onClick={handleInputChange}
-        ></Typography>
-        {canDelete ? (
-          <Tooltip title="Here you can change the card number">
-            <Button
-              sx={{
-                color: "grey",
-                textTransform: "none",
-                fontWeight: "normal",
-              }}
-              size="small"
-              onClick={handleInputChange}
-            >
+
+        <div>
+          {canDelete ? (
+            <Typography variant="body2" color="red">
+              click here to change the card number:
+            </Typography>
+          ) : null}
+          {canDelete ? (
+            <Tooltip>
+              <button
+                style={{
+                  color: "grey",
+                  textTransform: "none",
+                  fontWeight: "normal",
+                }}
+                size="small"
+                onClick={handleInputChange}
+              >
+                {"Card Number: "}
+                {cardNumber}
+              </button>
+            </Tooltip>
+          ) : (
+            <Typography variant="body2" color="text.secondary">
               {"Card Number: "}
               {cardNumber}
-            </Button>
-          </Tooltip>
-        ) : (
-          <Button
-            sx={{
-              color: "grey",
-              textTransform: "none",
-              fontWeight: "normal",
-            }}
-            size="small"
-          >
-            {"CardNumber: "}
-            {cardNumber}
-          </Button>
-        )}
+            </Typography>
+          )}
+        </div>
       </CardContent>
+      {stock <= 1 ? (
+        <Typography
+          variant="body2"
+          color="error"
+          fontWeight="bold"
+          fontSize="1.5rem"
+        >
+          Sold Out
+        </Typography>
+      ) : (
+        <Button variant="contained" color="primary">
+          Buy Now
+        </Button>
+      )}
       <CardActions>
-        {canDelete || (canEdit && cardIdUser === idUser) ? (
+        {canDelete || canEdit ? (
           <Button size="small" onClick={() => onDelete(id)}>
             <DeleteIcon />
           </Button>
         ) : (
           ""
         )}
-        {canEdit && cardIdUser === idUser ? (
+        {canEdit ? (
           <Button variant="text" color="warning" onClick={() => onEdit(id)}>
             Edit
           </Button>

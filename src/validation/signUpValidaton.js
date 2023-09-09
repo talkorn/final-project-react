@@ -20,7 +20,7 @@ const signUpSchema = Joi.object({
   country: Joi.string().min(2).max(256).required(),
   city: Joi.string().min(2).max(256).required(),
   street: Joi.string().min(2).max(256).required(),
-  houseNumber: Joi.string().min(1).max(256).required(),
+  houseNumber: Joi.number().min(0).max(99999999999).required(),
   zipCode: Joi.number().min(0).max(99999999999).allow(""),
   isBusiness: Joi.boolean(),
 });

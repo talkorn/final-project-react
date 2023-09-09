@@ -58,7 +58,6 @@ function ResponsiveAppBar() {
           ...data,
         };
         setUserPicture(newInputState.image);
-        console.log("newInputState", newInputState);
       } catch (err) {
         console.log("error from axios", err.response.data);
       }
@@ -161,13 +160,13 @@ function ResponsiveAppBar() {
                 />
               )}
 
-              {payload && payload.isBusiness && (
-                <NavLinkComponent
-                  key={ROUTES.MYCARDS}
-                  url={ROUTES.MYCARDS}
-                  label="MY Cards"
-                  onClick={handleCloseNavMenu}
-                />
+              {payload && payload.isBusiness ? (
+                <NavLinkComponent url={ROUTES.MYCARDS} label="MY Cards" />
+              ) : (
+                payload &&
+                payload.isAdmin && (
+                  <NavLinkComponent url={ROUTES.MYCARDS} label="MY Cards" />
+                )
               )}
 
               {payload && payload.isAdmin && (
@@ -234,8 +233,13 @@ function ResponsiveAppBar() {
             {isLoggedIn && (
               <NavLinkComponent url={ROUTES.FAVCARDS} label="Favorite" />
             )}
-            {payload && payload.isBusiness && (
+            {payload && payload.isBusiness ? (
               <NavLinkComponent url={ROUTES.MYCARDS} label="MY Cards" />
+            ) : (
+              payload &&
+              payload.isAdmin && (
+                <NavLinkComponent url={ROUTES.MYCARDS} label="MY Cards" />
+              )
             )}
 
             {payload && payload.isAdmin && (

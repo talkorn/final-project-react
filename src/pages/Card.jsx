@@ -23,7 +23,6 @@ const CardPage = () => {
 
   useEffect(() => {
     LoggedIn();
-
     if (inputState) {
     }
     (async () => {
@@ -33,7 +32,6 @@ const CardPage = () => {
         }
         const errors = validateIdCardParamsSchema({ id });
         if (errors) {
-          // there was errors = incorrect id
           navigate("/");
           return;
         }
@@ -123,28 +121,18 @@ const CardPage = () => {
           idUser={idUser}
           ids={inputState._id}
           title={inputState.title}
-          /* subTitle={inputState.subTitle} */
           price={inputState.price}
           stock={inputState.stock}
-
           category={inputState.category}
           colors={inputState.colors}
           description={inputState.description}
-          /*  phone={inputState.phone} */
           img={inputState.url}
           web={inputState.web}
-          /* state={inputState.state}
-          country={inputState.country}
-          city={inputState.city}
-          street={inputState.street}
-          email={inputState.email}
-          houseNumber={inputState.houseNumber}
-          zipCode={inputState.zipCode} */
           bizNumber={inputState.bizNumber}
           createdAt={inputState.createdAt}
           onEdit={moveToEditPage}
           onDelete={deleteCardFromInitialCardsArr}
-          canEdit={payload && (payload.biz || payload.isAdmin)}
+          canEdit={payload && payload.isAdmin}
           canDelete={payload && payload.isAdmin}
           canUser={payload && payload._id}
           cardIdUser={inputState.user_id}

@@ -79,7 +79,7 @@ const SignUpPage = () => {
       if (!inputState.zipCode) {
         delete inputState.zipCode;
       }
-      inputState.isBusiness = true;
+      inputState.isBusiness = false;
       inputState.image = {};
       inputState.name = {};
       inputState.address = {};

@@ -4,7 +4,6 @@ import axios from "axios";
 import CardComponent from "../components/CardComponents";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import useLoggedIn from "../hooks/useLoggedIn";
 import CssBaseline from "@mui/material/CssBaseline";
 import useQueryParams from "../hooks/useQueryParam.js";
 import filterFunction from "../utilis/filterFunc.js";
@@ -25,13 +24,10 @@ const FavoritePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
   const TabletSize = useResizeHook();
-  const LoggedIn = useLoggedIn();
   const navigate = useNavigate();
   const payload = useSelector((store) => store.authSlice.payload);
 
   useEffect(() => {
-    LoggedIn();
-
     axios
       .get("http://localhost:8181/api/cards")
       .then(({ data }) => {
@@ -93,7 +89,7 @@ const FavoritePage = () => {
   const deleteCardFromInitialCardsArr = async (id) => {
     try {
       console.log("id", id);
-      setCardsArr((cardsArr) => cardsArr.filter((item) => item._id != id));
+      setCardsArr((cardsArr) => cardsArr.filter((item) => item._id !== id));
       console.log("cardsArr", cardsArr);
       await axios.delete("cards/" + id);
     } catch (err) {
@@ -103,7 +99,7 @@ const FavoritePage = () => {
   return (
     <Box>
       <CssBaseline />
-      <h1>Favorite</h1>
+      <h1 style={{ fontFamily: "Pangolin" }}>Favorite</h1>
       <Box
         style={{
           display: "flex",
@@ -111,14 +107,14 @@ const FavoritePage = () => {
           justifyContent: "space-between",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <Box style={{ display: "flex", alignItems: "center" }}>
           {cardsArr.filter((item) => item.likes.includes(idUser)).length ===
           0 ? (
-            <h2>Your favorite cards cart is empty</h2>
+            <h1>Your favorite cards cart is empty</h1>
           ) : (
             <h2>Here You Can See All Your Favorite Cards</h2>
           )}
-        </div>
+        </Box>
 
         <SortHeader
           onNumAscending={() => setCardsArr(numAscending(cardsArr))}
@@ -129,18 +125,8 @@ const FavoritePage = () => {
           onChangeCardsToTable={() => changeCardsToTable()}
         />
       </Box>
-      {/* {cardsArr.filter((item) => item.likes == idUser).length == 0 ? (
-        <h2>Your favorite cards cart is empty</h2>
-      ) : (
-        <h2>Here You Can See All Your Favorite Cards</h2>
-      )}
-      <SortHeader
-        onNumAscending={() => setCardsArr(numAscending(cardsArr))}
-        onNumDescending={() => setCardsArr(numDescending(cardsArr))}
-        onStrAscending={() => setCardsArr(strAscending(cardsArr))}
-        onStrDescending={() => setCardsArr(strDescending(cardsArr))}
-      /> */}
-      <Grid container spacing={2}>
+
+      <Grid container spacing={0.3}>
         {cardsArr &&
           cardsArr
             .filter((item) => item.likes.includes(idUser))
@@ -163,7 +149,7 @@ const FavoritePage = () => {
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}
                     onFavorites={addToFavorites}
-                    canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                    canEdit={payload && payload.isAdmin}
                     canDelete={payload && payload.isAdmin}
                     canUser={payload && payload._id}
                     cardIdUser={item.user_id}
@@ -175,7 +161,7 @@ const FavoritePage = () => {
           cardsArr
             .filter((item) => item.likes.includes(idUser))
             .map((item) => (
-              <Grid item xs={12} sm={6} md={4} key={item._id + Date.now()}>
+              <Grid item xs={12} sm={6} md={3} key={item._id + Date.now()}>
                 {ShowCards || (!ShowCards && TabletSize) ? (
                   <CardComponent
                     likes={item.likes}
@@ -192,7 +178,7 @@ const FavoritePage = () => {
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}
                     onFavorites={addToFavorites}
-                    canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                    canEdit={payload && payload.isAdmin}
                     canDelete={payload && payload.isAdmin}
                     canUser={payload && payload._id}
                     cardIdUser={item.user_id}

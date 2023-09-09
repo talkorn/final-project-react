@@ -13,7 +13,7 @@ const NameHeader = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-        backgroundColor: "white",
+        backgroundColor: "lightyellow",
         "&:hover": {
           color: "black",
         },

@@ -4,10 +4,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -18,7 +14,7 @@ import logInValidationSchema from "../validation/logInValidation";
 import axios from "axios";
 import useLoggedIn from "../hooks/useLoggedIn";
 import { Alert } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Stack from "@mui/material/Stack";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
@@ -51,29 +47,13 @@ const LogIn = () => {
       navigate(ROUTES.HOME);
     } catch (err) {
       console.log(err);
-      /* if (err.response.data) {
-        
-       
-      } else {
-        
-      } */ toast.error(err.response.statusText);
-      // toast.error(err.response.data.message);
+      toast.error(err.response.statusText);
       toast.error(err.response.data);
-      /* if (err.response.statusText === "Bad Request") {
-        console.log("this mis");
-        toast.error(err.message);
-        toast.error("Bad Request");
-      } else {
-        console.log("login error", err.message);
-
-        toast.error(err.response.data);
-      } */
     }
   };
   const handleInputChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
-    console.log("newInputState[ev.target.id]", newInputState[ev.target.id]);
     setInputState(newInputState);
   };
   const cancleButoon = () => {

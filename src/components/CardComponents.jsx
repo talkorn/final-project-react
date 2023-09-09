@@ -84,14 +84,14 @@ const CardComponent = ({
         </Button>
       )}
       <CardActions>
-        {canDelete || (canEdit && cardIdUser === idUser) ? (
+        {canDelete || canEdit ? (
           <Button size="small" onClick={() => onDelete(id)}>
             <DeleteIcon />
           </Button>
         ) : (
           ""
         )}
-        {canEdit && cardIdUser === idUser ? (
+        {canEdit ? (
           <Button variant="text" color="warning" onClick={() => onEdit(id)}>
             Edit
           </Button>
@@ -143,7 +143,7 @@ CardComponent.propTypes = {
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   onDelete: PropTypes.func,
   onClick: PropTypes.func,
   onEdit: PropTypes.func,

@@ -19,7 +19,6 @@ import TableComponent from "../components/TableComponnent";
 import useResizeHook from "../hooks/useResizeHook";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
-import { categoryActions } from "../store/category";
 const CategoryPage = () => {
   const [ShowTable, setShowTable] = useState(false);
   const [ShowCards, setShowCards] = useState(true);
@@ -53,13 +52,6 @@ const CategoryPage = () => {
         console.log("err from axios", err);
         toast.error(err.response.data);
       });
-    /* 
-    // Update the URL with the currentCategory parameter
-    const queryParams = new URLSearchParams(location.search);
-    queryParams.set("", currentCategory);
-
-    const newUrl = `${location.pathname}?${queryParams.toString()}`;
-    window.history.replaceState(null, "", newUrl); */
   }, []);
 
   const filterFunc = (data) => {
@@ -82,9 +74,6 @@ const CategoryPage = () => {
   }
   const idUser = payload ? payload._id : null;
 
-  /* if (!idUser) {
-    return;
-  } */
   if (!cardsArr) {
     return <CircularProgress />;
   }
@@ -161,7 +150,6 @@ const CategoryPage = () => {
                     onClick={moveToCardPage}
                     id={item._id}
                     title={item.title}
-                    description={item.description}
                     price={item.price}
                     stock={item.stock}
                     category={item.category}
@@ -170,10 +158,9 @@ const CategoryPage = () => {
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}
                     onFavorites={addToFavorites}
-                    canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                    canEdit={payload && payload.isAdmin}
                     canDelete={payload && payload.isAdmin}
                     canUser={payload && payload._id}
-                    cardIdUser={item.user_id}
                   />
                 )}
               </Grid>
@@ -190,7 +177,6 @@ const CategoryPage = () => {
                     onClick={moveToCardPage}
                     id={item._id}
                     title={item.title}
-                    description={item.description}
                     price={item.price}
                     stock={item.stock}
                     category={item.category}
@@ -199,10 +185,9 @@ const CategoryPage = () => {
                     onEdit={moveToEditPage}
                     onDelete={deleteCardFromInitialCardsArr}
                     onFavorites={addToFavorites}
-                    canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                    canEdit={payload && payload.isAdmin}
                     canDelete={payload && payload.isAdmin}
                     canUser={payload && payload._id}
-                    cardIdUser={item.user_id}
                   />
                 ) : null}
               </Grid>

@@ -1,24 +1,18 @@
 import { useState, useEffect } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import EditIcon from "@mui/icons-material/Edit";
+import { Button, Grid, Stack, CardMedia, Box, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ROUTES from "../routes/ROUTES";
 import { CircularProgress } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import UserComponent from "../components/UserComponent";
-import Stack from "@mui/material/Stack";
-import CardMedia from "@mui/material/CardMedia";
 import validateProfileSchema from "../validation/ProfilePageValidation";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProfileComponent from "../components/profilecom/ProfileComponent";
+import ProfileForm from "../components/profilecom/ProfileForm";
 
 const ProfilePage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -46,7 +40,7 @@ const ProfilePage = () => {
   });
   const [initialnputState, setInitialnputState] = useState("");
   const navigate = useNavigate();
-
+  const alowAmoty = true;
   useEffect(() => {
     (async () => {
       try {
@@ -73,7 +67,8 @@ const ProfilePage = () => {
   useEffect(() => {
     const joiResponse = validateProfileSchema(inputState);
     setInputsErrorsState(joiResponse);
-
+    console.log(joiResponse);
+    console.log("inputsErrorsState", inputsErrorsState);
     if (
       inputState &&
       !joiResponse &&
@@ -93,22 +88,16 @@ const ProfilePage = () => {
   }, [inputState]);
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    console.log("inputsErrorsState", inputsErrorsState);
     try {
       if (inputsErrorsState) {
         return;
       }
-
       const id = payload._id;
       let updatedInputState = { ...inputState };
-
       if (selectedImage) {
         const formData = new FormData();
         formData.append("image", selectedImage);
-
         const { data } = await axios.post(`users/${id}/image`, formData);
-
         updatedInputState = {
           ...updatedInputState,
           image: {
@@ -117,7 +106,6 @@ const ProfilePage = () => {
           },
         };
       }
-
       await axios.put(`users/${id}`, updatedInputState);
       toast.success("Profile update completed");
       navigate(ROUTES.HOME);
@@ -126,52 +114,25 @@ const ProfilePage = () => {
       console.log("error from axios", err.response.data);
     }
   };
-
-  /* const handleInputChange = (ev) => {
-    const { id, value, files } = ev.target;
-    let newInputState = { ...inputState };
-
-    if (typeof id === "string" && id.includes(".")) {
-      const [nestedProperty, nestedKey] = id.split(".");
-      newInputState[nestedProperty][nestedKey] = value;
-    } else {
-      newInputState[id] = value;
-    }
-
-    if (files && files[0]) {
-      setSelectedImage(files[0]);
-      console.log(files[0]);
-      const formData11 = new FormData();
-      formData11.append("image", selectedImage);
-    }
-
-    setInputState(newInputState);
-  }; */
   const handleInputChange = (ev) => {
     const { id, value, files } = ev.target;
-    let newInputState = { ...inputState };
-
+    let newInputState = JSON.parse(JSON.stringify(inputState));
     if (typeof id === "string" && id.includes(".")) {
       const [nestedProperty, nestedKey] = id.split(".");
       newInputState[nestedProperty][nestedKey] = value;
     } else {
       newInputState[id] = value;
     }
-
     if (files && files[0]) {
       setSelectedImage(files[0]);
-
-      // Create a preview URL for the selected image
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreviewUrl(reader.result);
       };
       reader.readAsDataURL(files[0]);
     }
-
     setInputState(newInputState);
   };
-
   const resetButton = () => {
     setInputState(initialnputState);
   };
@@ -184,91 +145,52 @@ const ProfilePage = () => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <EditIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Profile Page
-        </Typography>
-        <CardMedia
-          component="img"
-          sx={{ height: 140 }}
-          image={imagePreviewUrl || inputState.image.url}
-          title={inputState.image.alt}
-        />{" "}
-        <Box component="form" noValidate sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            {[
-              { description: "name.first", required: true },
-              { description: "name.middle", required: false },
-              { description: "name.last", required: true },
-              { description: "phone", required: true },
-              { description: "email", required: true },
-              { description: "image.url", required: false },
-              { description: "image.alt", required: false },
-              { description: "address.state", required: false },
-              { description: "address.country", required: true },
-              { description: "address.city", required: true },
-              { description: "address.street", required: true },
-              { description: "address.houseNumber", required: true },
-              { description: "address.zip", required: false },
-            ].map((props, index) => (
-              <Grid item xs={12} sm={6} key={index}>
-                <UserComponent
-                  description={props.description}
-                  inputStates={inputState}
-                  onChanges={handleInputChange}
-                  inputsErrorsStates={inputsErrorsState}
-                  required={props.required}
-                />
-              </Grid>
-            ))}
-            <input
-              accept="image/*"
-              id="imageFile"
-              type="file"
-              onChange={handleInputChange}
-              style={{ display: "none" }}
-            />
-            <label htmlFor="imageFile">
-              <Button component="span" variant="outlined" color="primary">
-                Upload Image
-              </Button>
-            </label>
-
-            <Stack xs={12} sx={{ m: 2 }} spacing={2} direction="row">
-              <Button onClick={cancleButoon} variant="outlined" color="error">
-                Cancle
-              </Button>
-              <Button
-                onClick={() => resetButton()}
-                variant="outlined"
-                color="success"
-              >
-                <RestartAltIcon />
-              </Button>
-            </Stack>
-
-            <Button
-              onClick={handleSubmit}
-              type="submit"
-              disabled={!buttonValid}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Save
-            </Button>
-          </Grid>
-        </Box>
+      <ProfileComponent />
+      <CardMedia
+        component="img"
+        sx={{ height: 140 }}
+        image={imagePreviewUrl || inputState.image.url}
+        title={inputState.image.alt}
+      />
+      <Box component="form" noValidate sx={{ mt: 3 }}>
+        <Grid container spacing={2}>
+          {[
+            { description: "name.first", required: true },
+            { description: "name.middle", required: false },
+            { description: "name.last", required: true },
+            { description: "phone", required: true },
+            { description: "email", required: true },
+            { description: "image.url", required: false },
+            { description: "image.alt", required: false },
+            { description: "address.state", required: false },
+            { description: "address.country", required: true },
+            { description: "address.city", required: true },
+            { description: "address.street", required: true },
+            { description: "address.houseNumber", required: true },
+            { description: "address.zip", required: false },
+          ].map((props, index) => (
+            <Grid item xs={12} sm={6} key={index}>
+              <UserComponent
+                description={props.description}
+                inputStates={inputState}
+                onChanges={handleInputChange}
+                inputsErrorsStates={inputsErrorsState}
+                required={props.required}
+                allowToBeEmpty={alowAmoty}
+              />
+            </Grid>
+          ))}
+          <ProfileForm
+            inputState={inputState}
+            imagePreviewUrl={imagePreviewUrl}
+            handleInputChange={handleInputChange}
+            inputsErrorsState={inputsErrorsState}
+            buttonValid={buttonValid}
+            handleSubmit={handleSubmit}
+            onCancel={cancleButoon}
+            onReset={resetButton}
+          />
+        </Grid>
       </Box>
     </Container>
   );

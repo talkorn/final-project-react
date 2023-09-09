@@ -6,7 +6,6 @@ import CardComponent from "../components/CardComponents";
 import ROUTES from "../routes/ROUTES";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useLoggedIn from "../hooks/useLoggedIn";
 import { toast } from "react-toastify";
 import axios from "axios";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,12 +24,9 @@ const MyCardsPage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
   const navigate = useNavigate();
-  const LoggedIn = useLoggedIn();
   const payload = useSelector((store) => store.authSlice.payload);
 
   useEffect(() => {
-    LoggedIn();
-
     axios
       .get("cards/my-cards")
       .then(({ data }) => {
@@ -54,7 +50,6 @@ const MyCardsPage = () => {
   let idUser;
   if (payload) {
     idUser = payload._id;
-    // rest of the code here
   }
 
   if (!cardsArr) {
@@ -95,7 +90,7 @@ const MyCardsPage = () => {
   return (
     <Box>
       <CssBaseline />
-      <h1>Cards Page</h1>
+      <h1 style={{ fontFamily: "Pangolin" }}>Cards Page</h1>
       <h2>Here You Can Find All your Buisness Cards</h2>
       <h3>To add a new card, click on the blue button to your left</h3>
       <SortHeader
@@ -129,33 +124,24 @@ const MyCardsPage = () => {
         </Box>
         <Grid container spacing={2}>
           {cardsArr.map((item) => (
-            <Grid item xs={12} sm={6} md={4} key={item._id + Date.now()}>
+            <Grid item xs={12} sm={6} md={3} key={item._id + Date.now()}>
               <CardComponent
                 likes={item.likes}
                 idUser={idUser}
                 onClick={moveToCardPage}
                 id={item._id}
                 title={item.title}
-                subTitle={item.subTitle}
                 description={item.description}
                 price={item.price}
                 stock={item.stock}
                 colors={item.colors}
                 category={item.category}
                 img={item.image.url}
-                web={item.web}
-                state={item.state}
-                country={item.country}
-                city={item.city}
-                street={item.street}
-                email={item.email}
-                houseNumber={item.houseNumber}
-                zipCode={item.zipCode}
                 bizNumber={item.bizNumber}
                 onEdit={moveToEditPage}
                 onDelete={deleteCardFromInitialCardsArr}
                 onFavorites={addToFavorite}
-                canEdit={payload && (payload.biz || payload.isAdmin)}
+                canEdit={payload && payload.isAdmin}
                 canDelete={payload && payload.isAdmin}
                 canUser={payload && payload._id}
                 cardIdUser={item.user_id}

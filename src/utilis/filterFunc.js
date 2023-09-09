@@ -1,5 +1,4 @@
 const filterFunction = (data, searchParams) => {
-  console.log(data);
   if (!data) {
     return [];
   }

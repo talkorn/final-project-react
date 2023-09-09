@@ -4,7 +4,11 @@ import { Fragment } from "react";
 import PropTypes from "prop-types";
 
 const UserComponent = (userArr) => {
+  const allowToBeEmpty = userArr.allowToBeEmpty;
   const descriptions = userArr.description;
+  const descriptionsForError = userArr.description.includes(".")
+    ? userArr.description.split(".")[1] // Extract the second word after the dot
+    : userArr.description;
   const inputStates = userArr.inputStates;
   const onChanges = userArr.onChanges;
   const inputsErrorsStates = userArr.inputsErrorsStates;
@@ -12,6 +16,11 @@ const UserComponent = (userArr) => {
   const nestedProperty = descriptions
     .split(".")
     .reduce((obj, key) => obj[key], inputStates);
+
+  console.log(allowToBeEmpty);
+  console.log(descriptions);
+  console.log(inputStates);
+  console.log(inputsErrorsStates);
 
   return (
     <Fragment>
@@ -26,23 +35,38 @@ const UserComponent = (userArr) => {
         value={nestedProperty}
         onChange={onChanges}
       />
-
-      {inputsErrorsStates &&
-        inputStates[descriptions] &&
-        inputsErrorsStates[descriptions] && (
-          <Alert severity="warning">
-            {descriptions === "password" ? (
-              <div>
-                password should contain at least one uppercase and one lowercase
-                letter. length should be between 6 and 10.
-              </div>
-            ) : (
-              inputsErrorsStates[descriptions].map((item) => (
-                <div key={descriptions + "-errors" + item}>{item}</div>
-              ))
-            )}
-          </Alert>
-        )}
+      {allowToBeEmpty
+        ? inputsErrorsStates &&
+          inputsErrorsStates[descriptionsForError] && (
+            <Alert severity="warning">
+              {descriptions === "password" ? (
+                <div>
+                  password should contain at least one uppercase and one
+                  lowercase letter. Length should be between 6 and 10.
+                </div>
+              ) : (
+                inputsErrorsStates[descriptionsForError].map((item) => (
+                  <div key={descriptions + "-errors" + item}>{item}</div>
+                ))
+              )}
+            </Alert>
+          )
+        : inputsErrorsStates &&
+          inputStates[descriptions] &&
+          inputsErrorsStates[descriptionsForError] && (
+            <Alert severity="warning">
+              {descriptions === "password" ? (
+                <div>
+                  password should contain at least one uppercase and one
+                  lowercase letter. Length should be between 6 and 10.
+                </div>
+              ) : (
+                inputsErrorsStates[descriptionsForError].map((item) => (
+                  <div key={descriptions + "-errors" + item}>{item}</div>
+                ))
+              )}
+            </Alert>
+          )}
     </Fragment>
   );
 };

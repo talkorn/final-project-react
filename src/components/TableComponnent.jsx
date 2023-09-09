@@ -39,7 +39,6 @@ const TableComponent = ({
   stock,
   bizNumber,
   likes,
-
   cardIdUser,
   onClick,
   onEdit,
@@ -92,16 +91,31 @@ const TableComponent = ({
                   {"$"}
                   <br />
                 </TableCell>
+
                 <TableCell>
+                  {stock <= 1 ? (
+                    <Typography
+                      variant="body2"
+                      color="error"
+                      fontWeight="bold"
+                      fontSize="1.5rem"
+                    >
+                      Sold Out
+                    </Typography>
+                  ) : (
+                    <Button variant="contained" color="primary">
+                      Buy Now
+                    </Button>
+                  )}
                   <CardActions>
-                    {canDelete || (canEdit && cardIdUser === idUser) ? (
+                    {canDelete || canEdit ? (
                       <Button size="small" onClick={() => onDelete(id)}>
                         <DeleteIcon />
                       </Button>
                     ) : (
                       ""
                     )}
-                    {canEdit && cardIdUser === idUser ? (
+                    {canEdit ? (
                       <Button
                         variant="text"
                         color="warning"
@@ -172,7 +186,7 @@ TableComponent.propTypes = {
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   onDelete: PropTypes.func,
   onClick: PropTypes.func,
   onEdit: PropTypes.func,

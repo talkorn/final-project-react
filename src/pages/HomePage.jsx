@@ -21,13 +21,11 @@ import useResizeHook from "../hooks/useResizeHook";
 
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
-  //const [TabletSize, setTabletSize] = useState(false);
   const [cardsArr, setCardsArr] = useState(null);
   const [ShowTable, setShowTable] = useState(false);
   const [ShowCards, setShowCards] = useState(true);
   const navigate = useNavigate();
   const TabletSize = useResizeHook();
-  /*  const LoggedIn = useLoggedIn(); */
   const searchParams = useQueryParams();
   const payload = useSelector((store) => store.authSlice.payload);
 
@@ -58,12 +56,10 @@ const HomePage = () => {
   let idUser;
   if (payload) {
     idUser = payload._id;
-    // rest of the code here
   }
   if (!cardsArr) {
     return <CircularProgress />;
   }
-
   const moveToCardPage = (id) => {
     navigate(`/card/${id}`);
   };
@@ -90,7 +86,7 @@ const HomePage = () => {
 
   const deleteCardFromInitialCardsArr = async (id) => {
     try {
-      setCardsArr((cardsArr) => cardsArr.filter((item) => item._id != id));
+      setCardsArr((cardsArr) => cardsArr.filter((item) => item._id !== id));
       await axios.delete("cards/" + id);
       toast.success("you have deleted the card");
     } catch (err) {
@@ -101,7 +97,7 @@ const HomePage = () => {
   return (
     <Box>
       <CssBaseline />
-      <h1>Welcome To Tal's Jewelry</h1>
+      <h1 style={{ fontFamily: "Pangolin" }}>Welcome To Tal's Jewelry</h1>
       <h2>Here You Can Find Our Uniqe and Hand Made Jewelry</h2>
       <Slideshow />
       <SortHeader
@@ -112,7 +108,7 @@ const HomePage = () => {
         onChangeTableToCards={() => changeTableToCards()}
         onChangeCardsToTable={() => changeCardsToTable()}
       />
-      <Grid container spacing={1}>
+      <Grid container spacing={0.5}>
         {cardsArr.map((item) => (
           <Grid item xs={12} key={item._id + Date.now()}>
             {ShowTable && !TabletSize && (
@@ -125,7 +121,6 @@ const HomePage = () => {
                 onClick={moveToCardPage}
                 id={item._id}
                 title={item.title}
-                subTitle={item.subTitle}
                 description={item.description}
                 price={item.price}
                 stock={item.stock}
@@ -134,7 +129,7 @@ const HomePage = () => {
                 onEdit={moveToEditPage}
                 onDelete={deleteCardFromInitialCardsArr}
                 onFavorites={addToFavorite}
-                canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                canEdit={payload && payload.isAdmin}
                 canDelete={payload && payload.isAdmin}
                 canUser={payload && payload._id}
               />
@@ -142,7 +137,7 @@ const HomePage = () => {
           </Grid>
         ))}
         {cardsArr.map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item._id + Date.now()}>
+          <Grid item xs={12} sm={6} md={3} key={item._id + Date.now()}>
             {" "}
             {ShowCards || (!ShowCards && TabletSize) ? (
               <CardComponent
@@ -154,7 +149,6 @@ const HomePage = () => {
                 onClick={moveToCardPage}
                 id={item._id}
                 title={item.title}
-                subTitle={item.subTitle}
                 description={item.description}
                 price={item.price}
                 stock={item.stock}
@@ -163,7 +157,7 @@ const HomePage = () => {
                 onEdit={moveToEditPage}
                 onDelete={deleteCardFromInitialCardsArr}
                 onFavorites={addToFavorite}
-                canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                canEdit={payload && payload.isAdmin}
                 canDelete={payload && payload.isAdmin}
                 canUser={payload && payload._id}
               />

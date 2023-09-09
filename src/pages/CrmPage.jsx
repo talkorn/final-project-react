@@ -7,12 +7,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Checkbox,
-  FormControlLabel,
-  Button,
   Grid,
+  Box,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -54,8 +51,6 @@ const CrmTable = () => {
       delete updatedUser._id;
     }
     const joiResponse = validateProfileSchema(updatedUser);
-    console.log("joiResponse", joiResponse);
-
     setInputsErrorsState(joiResponse);
 
     if (
@@ -68,7 +63,6 @@ const CrmTable = () => {
       setButtonValid(true);
     } else {
       setButtonValid(false);
-      console.log("here???");
     }
   }, [initialuserData]);
   const openUserCard = (id) => {
@@ -116,7 +110,6 @@ const CrmTable = () => {
     } else {
       updatedUser[property] = value;
     }
-
     setIntialUserData(updatedUser);
     const newDataUser = newInitialData.map((user) => {
       if (user._id === id) {
@@ -140,9 +133,8 @@ const CrmTable = () => {
       delete updatedUser.image._id;
       delete updatedUser.address._id;
       delete updatedUser._id;
-      const response = await axios.put(`/users/${id}`, updatedUser);
+      await axios.put(`/users/${id}`, updatedUser);
       const afterChangeData = await axios.get("users");
-      console.log(afterChangeData.data);
       setIntialData(afterChangeData.data);
       setChangeOnluOnSubmit(afterChangeData.data);
       toast.success("changes has been updated");
@@ -153,48 +145,51 @@ const CrmTable = () => {
     }
   };
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <div style={{ overflowX: "auto" }}>
-          <TableContainer component={Paper}>
-            <Table
-              sx={{ minWidth: 650 }}
-              padding="none"
-              aria-label="simple table"
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell>FirstName</TableCell>
-                  <TableCell align="center">LastName</TableCell>
-                  <TableCell align="center">Id</TableCell>
-                  <TableCell align="center">phone</TableCell>
-                  <TableCell align="center">email</TableCell>
-                  <TableCell align="center">admin</TableCell>
-                  <TableCell align="center">delete</TableCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {initialData &&
-                  initialData.map((row) => (
-                    <UserTable
-                      key={row._id}
-                      user={row}
-                      editedUserId={editedUserId}
-                      handleInputChange={handleInputChange}
-                      deleteUser={deleteUser}
-                      handleSubmit={handleSubmit}
-                      buttonValid={buttonValid}
-                      openUserCard={openUserCard}
-                      inputsErrorsState={inputsErrorsState}
-                    />
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+    <Box>
+      <h1 style={{ fontFamily: "Pangolin" }}>User information</h1>
+      <h3> you can updeted the user info</h3>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <div style={{ overflowX: "auto" }}>
+            <TableContainer component={Paper}>
+              <Table
+                sx={{ minWidth: 650 }}
+                padding="none"
+                aria-label="simple table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>FirstName</TableCell>
+                    <TableCell align="center">LastName</TableCell>
+                    <TableCell align="center">Id</TableCell>
+                    <TableCell align="center">phone</TableCell>
+                    <TableCell align="center">email</TableCell>
+                    <TableCell align="center">admin</TableCell>
+                    <TableCell align="center">delete</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {initialData &&
+                    initialData.map((row) => (
+                      <UserTable
+                        key={row._id}
+                        user={row}
+                        editedUserId={editedUserId}
+                        handleInputChange={handleInputChange}
+                        deleteUser={deleteUser}
+                        handleSubmit={handleSubmit}
+                        buttonValid={buttonValid}
+                        openUserCard={openUserCard}
+                        inputsErrorsState={inputsErrorsState}
+                      />
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 export default CrmTable;

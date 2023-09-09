@@ -1,26 +1,18 @@
-/* 
-    , */
-
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import ROUTES from "../routes/ROUTES";
-
 import { CircularProgress } from "@mui/material";
-
 import CssBaseline from "@mui/material/CssBaseline";
 import UserComponent from "../components/UserComponent";
 import Stack from "@mui/material/Stack";
 import CardMedia from "@mui/material/CardMedia";
-import validateEditSchema from "../validation/editValidation";
 import validateEditCardSchema from "../validation/cardValidation.js";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -29,44 +21,27 @@ import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { useSelector } from "react-redux";
 const CardPage = () => {
-  /*  const { id } = useParams(); */
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const [buttonValid, setButtonValid] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const categories = ["earrings", "necklaces", "bracelets"];
-  let payload = useSelector((store) => store.authSlice.payload);
   const initialCard = {
     title: "",
-    /*  subTitle: "", */
     description: "",
     price: "",
     stock: "",
     category: "",
     colors: "",
-    /* email: "",
-    web: "", */
     image: {
-      url: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-
-      alt: "gjj",
+      url: "",
+      alt: "",
     },
-    /*  state: "",
-    country: "",
-    city: "",
-    street: "",
-    houseNumber: "",
-    zipCode: "", */
   };
   const [inputState, setInputState] = useState(initialCard);
-
   const navigate = useNavigate();
-
   useEffect(() => {
-    console.log(inputState);
     const joiResponse = validateEditCardSchema(inputState);
-    console.log("joiResponse", joiResponse);
     setInputsErrorsState(joiResponse);
     if (
       inputState &&
@@ -74,14 +49,6 @@ const CardPage = () => {
       inputState.title &&
       inputState.price &&
       inputState.stock &&
-      inputState.image.url &&
-      inputState.image.alt &&
-      /* inputState.subTitle &&
-      inputState.phone && 
-      inputState.country &&
-      inputState.email &&
-      inputState.web &&
-      inputState.city &&*/
       inputState.category &&
       inputState.colors &&
       inputState.description
@@ -92,18 +59,20 @@ const CardPage = () => {
     }
   }, [inputState]);
   const handleSubmit = async (event) => {
-    console.log("hgjyhfjyhf");
     event.preventDefault();
     try {
       if (inputsErrorsState) {
-        console.log("inputsErrorsState", inputsErrorsState);
         return;
       }
-      console.log(inputState);
+      if (inputState.image && inputState.image.url === "") {
+        inputState.image = {
+          url: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+          alt: "gjj",
+        };
+      }
       await axios.post("/cards/", inputState);
-      toast.success("Great! a new Business Card has been created");
-
-      //navigate(ROUTES.MYCARDS);
+      toast.success("Great! a new Jewelry Card has been created");
+      navigate(ROUTES.MYCARDS);
     } catch (err) {
       console.log("error from axios", err);
       toast.error(err.response.data);
@@ -115,16 +84,9 @@ const CardPage = () => {
     if (typeof id === "string" && id.includes(".")) {
       const [nestedProperty, nestedKey] = id.split(".");
       newInputState[nestedProperty][nestedKey] = value;
-      console.log(typeof newInputState[nestedProperty][nestedKey]);
     } else {
-      console.log(" newInputState[id]", newInputState[id]);
-      console.log(" value", value);
       newInputState[id] = value;
-      console.log(" newInputState.id", newInputState.id);
-      console.log(" newInputState", newInputState);
     }
-    /*  let newInputState = JSON.parse(JSON.stringify(inputState));
-    newInputState[ev.target.id] = ev.target.value; */
     setInputState(newInputState);
     setSelectedCategory(newInputState.category);
   };
@@ -132,7 +94,6 @@ const CardPage = () => {
     setInputState(initialCard);
     setButtonValid(false);
   };
-
   const cancleButoon = () => {
     navigate(ROUTES.HOME);
   };
@@ -145,7 +106,6 @@ const CardPage = () => {
   if (!inputState) {
     return <CircularProgress />;
   }
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -168,21 +128,16 @@ const CardPage = () => {
           sx={{ height: 140 }}
           image={inputState.image.url}
           title={inputState.image.alt}
-        />{" "}
+        />
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {[
               { description: "title", required: true },
-
               { description: "description", required: true },
-
               { description: "image.url", required: false },
               { description: "image.alt", required: false },
-              //{ description: "image.alt", required: false },
-
               { description: "price", required: true },
               { description: "stock", required: true },
-
               { description: "category", required: true },
               { description: "colors", required: true },
             ].map((props, index) => (
@@ -230,7 +185,6 @@ const CardPage = () => {
                 <RestartAltIcon />
               </Button>
             </Stack>
-
             <Button
               onClick={handleSubmit}
               type="submit"
