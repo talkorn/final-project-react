@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Container, CssBaseline, Grid, Button } from "@mui/material";
 import FileInput from "./ProfileInput";
 import ActionButtons from "./ProfileButton";
+import PropTypes from "prop-types";
 const ProfileForm = ({
   handleInputChange,
   buttonValid,
@@ -35,5 +36,11 @@ const ProfileForm = ({
     </Container>
   );
 };
-
+ProfileForm.Prototype = {
+  handleInputChange: PropTypes.func,
+  buttonValid: PropTypes.boolean,
+  handleSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
+  onReset: PropTypes.func,
+};
 export default ProfileForm;

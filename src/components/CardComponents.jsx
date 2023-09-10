@@ -18,12 +18,10 @@ const CardComponent = ({
   title,
   category,
   colors,
-  description,
   idUser,
   img,
   price,
   stock,
-  bizNumber,
   onClick,
   onEdit,
   onDelete,
@@ -32,18 +30,7 @@ const CardComponent = ({
   canEdit,
   canUser,
   canDelete,
-  cardIdUser,
 }) => {
-  /*  const [showCallWindow, setShowCallWindow] = React.useState(false);
-
-  const handleCallClick = () => {
-    setShowCallWindow(true);
-  };
-
-  const handleCloseCallWindow = () => {
-    setShowCallWindow(false);
-  }; */
-
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -112,26 +99,6 @@ const CardComponent = ({
           ) : (
             ""
           )}
-          {/*  <Button size="small" onClick={handleCallClick}>
-            <CallIcon />
-          </Button>{" "}
-          {showCallWindow && (
-            <Box
-              sx={{
-                position: "fixed",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                backgroundColor: "#ebe9b7",
-                padding: "10px",
-                borderRadius: "5px",
-              }}
-            >
-              <Button variant="contained" onClick={handleCloseCallWindow}>
-                Close
-              </Button>
-            </Box>
-          )} */}
         </Box>
       </CardActions>
     </Card>
@@ -139,16 +106,20 @@ const CardComponent = ({
 };
 
 CardComponent.propTypes = {
+  category: PropTypes.string,
+  colors: PropTypes.string,
+  idUser: PropTypes.string,
+  price: PropTypes.number,
+  stock: PropTypes.number,
+  onFavorites: PropTypes.func,
+  likes: PropTypes.array,
   id: PropTypes.string,
   img: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-
-  description: PropTypes.string,
   onDelete: PropTypes.func,
   onClick: PropTypes.func,
   onEdit: PropTypes.func,
   canEdit: PropTypes.bool,
-
   bizNumber: PropTypes.number,
 };
 

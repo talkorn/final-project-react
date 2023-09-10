@@ -1,6 +1,5 @@
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
-import CardMedia from "@mui/material/CardMedia";
 
 const NameHeader = () => {
   const imagePath = `${process.env.PUBLIC_URL}/logoTals.png`;

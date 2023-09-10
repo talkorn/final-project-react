@@ -5,19 +5,29 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import PersonIcon from "@mui/icons-material/Person";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import UserComponent from "../components/UserComponent";
 import CardMedia from "@mui/material/CardMedia";
+import validateIdCardParamsSchema from "../validation/idValidation";
 
 const UserPage = () => {
   const { id } = useParams();
   const [inputState, setInputState] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
       try {
+        if (!id) {
+          return;
+        }
+        const errors = validateIdCardParamsSchema({ id });
+        if (errors) {
+          navigate("/");
+          return;
+        }
         let newInputState;
         const { data } = await axios.get("users");
         if (data) {

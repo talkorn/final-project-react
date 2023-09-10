@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Grid, Stack, CardMedia, Box, Container } from "@mui/material";
+import { Grid, CardMedia, Box, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ROUTES from "../routes/ROUTES";
@@ -7,7 +7,6 @@ import { CircularProgress } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import UserComponent from "../components/UserComponent";
 import validateProfileSchema from "../validation/ProfilePageValidation";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -67,8 +66,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const joiResponse = validateProfileSchema(inputState);
     setInputsErrorsState(joiResponse);
-    console.log(joiResponse);
-    console.log("inputsErrorsState", inputsErrorsState);
+
     if (
       inputState &&
       !joiResponse &&
@@ -107,8 +105,8 @@ const ProfilePage = () => {
         };
       }
       await axios.put(`users/${id}`, updatedInputState);
+      window.location.reload();
       toast.success("Profile update completed");
-      navigate(ROUTES.HOME);
     } catch (err) {
       toast.error(err.response.data);
       console.log("error from axios", err.response.data);

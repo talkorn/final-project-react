@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@mui/material";
-
+import PropTypes from "prop-types";
 const FileInput = ({ onChange }) => {
   return (
     <>
@@ -19,5 +19,7 @@ const FileInput = ({ onChange }) => {
     </>
   );
 };
-
+FileInput.Prototype = {
+  onChange: PropTypes.func,
+};
 export default FileInput;

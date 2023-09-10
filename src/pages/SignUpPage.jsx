@@ -1,17 +1,12 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import Stack from "@mui/material/Stack";
 import validateSignUpSchema from "../validation/signUpValidaton";
 import axios from "axios";
 import UserComponent from "../components/UserComponent";
@@ -20,6 +15,7 @@ import ROUTES from "../routes/ROUTES";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CardMedia from "@mui/material/CardMedia";
+import ButtonGroup from "../components/ButtonGroup";
 const SignUpPage = () => {
   const resaetInputState = {
     firstName: "",
@@ -130,10 +126,6 @@ const SignUpPage = () => {
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
   };
-  const [agreement, setAgreement] = useState(false);
-  const handleChangecheck = (event) => {
-    setAgreement(event.target.checked);
-  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -185,47 +177,13 @@ const SignUpPage = () => {
                 />
               </Grid>
             ))}
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="buisness"
-                    onChange={handleChangecheck}
-                    color="primary"
-                  />
-                }
-                label="SignUp as buisness"
-              />
-            </Grid>
           </Grid>
-          <Stack xs={12} spacing={3} direction="row">
-            <Button
-              onClick={cancleButoon}
-              fullWidth
-              variant="outlined"
-              color="error"
-            >
-              Cancle
-            </Button>
-            <Button
-              onClick={resetButton}
-              fullWidth
-              variant="outlined"
-              color="success"
-            >
-              <RestartAltIcon />
-            </Button>
-          </Stack>
-
-          <Button
-            type="submit"
-            disabled={!buttonValid}
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign Up
-          </Button>
+          <ButtonGroup
+            onCancel={cancleButoon}
+            onRestart={resetButton}
+            onSubmit={handleSubmit}
+            isSubmitDisabled={!buttonValid}
+          />
         </Box>
       </Box>
     </Container>

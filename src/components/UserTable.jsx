@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Alert } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import PropTypes from "prop-types";
 const UserTable = ({
   user,
   editedUserId,
@@ -132,5 +132,14 @@ const UserTable = ({
     </TableRow>
   );
 };
-
+UserTable.Prototype = {
+  user: PropTypes.object,
+  editedUserId: PropTypes.string,
+  handleInputChange: PropTypes.func,
+  deleteUser: PropTypes.func,
+  handleSubmit: PropTypes.func,
+  buttonValid: PropTypes.bool,
+  openUserCard: PropTypes.func,
+  inputsErrorsState: PropTypes.array,
+};
 export default UserTable;

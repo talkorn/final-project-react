@@ -1,5 +1,6 @@
 import { Box, Typography, Avatar, Container } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+
 const ProfileComponent = () => {
   return (
     <Container component="main" maxWidth="xs">

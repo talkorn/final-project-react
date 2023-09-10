@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
-
+import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import TableRowsIcon from "@mui/icons-material/TableRows";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
-import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import { Select, MenuItem, FormControl } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const StyledSelect = styled(Select)(({ theme }) => ({
@@ -38,17 +37,9 @@ const SortHeader = ({
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(""); // State to manage the selected value
   const [TabletSize, setTabletSize] = useState(false);
-  const selectStyles = {
-    "& .MuiOutlinedInput-root": {
-      borderColor: "blue",
-    },
-    "& .MuiSelect-icon": {
-      color: "blue",
-    },
-    color: "blue",
-  };
+
   const handleSelectChange = (event) => {
-    setSelectedValue(event.target.value); // Update the selected value in the state
+    setSelectedValue(event.target.value);
 
     switch (event.target.value) {
       case "numAscending":
@@ -67,7 +58,7 @@ const SortHeader = ({
         break;
     }
 
-    setOpen(false); // Close the dropdown manually after selecting an item
+    setOpen(false);
   };
 
   const handleSelectOpen = () => {
@@ -82,13 +73,10 @@ const SortHeader = ({
       setTabletSize(window.innerWidth <= 600);
     };
 
-    // Initial check on component mount
     handleResize();
 
-    // Add event listener to listen for window resize
     window.addEventListener("resize", handleResize);
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -99,8 +87,7 @@ const SortHeader = ({
       style={{
         backgroundColor: "white",
         display: "flex",
-        /*  justifyContent: "space-between",
-        alignItems: "center", */
+
         textAlign: "left",
         "&:hover": {
           color: "black",
@@ -134,20 +121,6 @@ const SortHeader = ({
           <MenuItem value="strDescending">{"b-a"}</MenuItem>
         </StyledSelect>
       </FormControl>
-
-      {/*  <Select
-        open={open}
-        onClose={handleSelectClose}
-        onOpen={handleSelectOpen}
-        onChange={handleSelectChange}
-        value={selectedValue}
-        sx={{ fontSize: "0.9rem", margin: 0 }}
-      >
-        <MenuItem value="numAscending">{"price low to high"}</MenuItem>
-        <MenuItem value="numDescending">{"price high to low"}</MenuItem>
-        <MenuItem value="strAscending">{"a-b"}</MenuItem>
-        <MenuItem value="strDescending">{"b-a"}</MenuItem>
-      </Select> */}
       {!TabletSize && (
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button size="small" onClick={onChangeTableToCards}>
@@ -161,5 +134,12 @@ const SortHeader = ({
     </div>
   );
 };
-
+SortHeader.Prototype = {
+  onNumAscending: PropTypes.func,
+  onNumDescending: PropTypes.func,
+  onStrAscending: PropTypes.func,
+  onStrDescending: PropTypes.func,
+  onChangeTableToCards: PropTypes.func,
+  onChangeCardsToTable: PropTypes.func,
+};
 export default SortHeader;

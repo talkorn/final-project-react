@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
@@ -13,9 +12,9 @@ const NavLinkComponent = ({ url, label, onClick }) => {
             display: "block",
             p: 2,
             fontFamily: "monospace",
-            fontSize: "1.2rem", // Set the default font size to 1rem
+            fontSize: "1.2rem",
             "@media (max-width: 1040px) and (min-width: 800px)": {
-              fontSize: "0.88rem", // Set the font size to 1rem for screens between 800px and 1040px
+              fontSize: "0.88rem",
             },
           }}
           color={isActive ? "grey" : "black"}

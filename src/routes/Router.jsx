@@ -9,9 +9,7 @@ import EditPage from "../pages/EditPage";
 import FavoritePage from "../pages/Favorite";
 import AddCardPage from "../pages/AddCard";
 import MyCardsPage from "../pages/MyCards";
-
 import SuperProtectedRoute from "../components/SuperProtectedRoute";
-
 import ProfilePage from "../pages/ProfilePage";
 import CrmTable from "../pages/CrmPage";
 import UserPage from "../pages/UserPage";
@@ -27,9 +25,6 @@ const Router = () => {
       <Routes>
         <Route path={ROUTES.HOME} element={<HomePage />} />
         <Route path={ROUTES.ABOUT} element={<AboutPage />} />
-        {/* <Route path={ROUTES.NECKLACES} element={<NecklacesPage />} />
-        <Route path={ROUTES.EARRINGS} element={<EarringsPage />} />*/}
-
         <Route path={ROUTES.CATEGORY} element={<CategoryPage />} />
         <Route path={ROUTES.SIGNUP} element={<SignUpPage />} />
         <Route path="/card/:id" element={<CardPage />} />
@@ -54,19 +49,6 @@ const Router = () => {
             />
           }
         />
-        {/*  <Route
-          path={ROUTES.ADDCARD}
-          element={<AddCardPage />}
-/>
-           <Route
-          path={ROUTES.ADDCARD}
-          element={
-            <SuperProtectedRoute
-              isAdmin={false}
-              isBiz={true}
-              element={<AddCardPage />}
-            /> 
-        /> */}
         <Route
           path={ROUTES.ADDCARD}
           element={

@@ -1,5 +1,6 @@
 import { Box, Typography, Avatar, CardMedia, Container } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import PropTypes from "prop-types";
 const EditComponent = (url, title1) => {
   return (
     <Container component="main" maxWidth="xs">
@@ -26,5 +27,9 @@ const EditComponent = (url, title1) => {
       </Box>
     </Container>
   );
+};
+EditComponent.Prototype = {
+  url: PropTypes.string,
+  title1: PropTypes.string,
 };
 export default EditComponent;

@@ -1,4 +1,4 @@
-# Tal's Card Web
+<!-- # Tal's Card Web
 
 Tal's Card Web is a web application built using React, Redux, Joi, Hooks, MongoDB, and Material-UI (MUI). It provides users with a platform to create and manage their digital business cards. This README provides an overview of the application's features, installation instructions, and usage guidelines.
 
@@ -113,3 +113,110 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ### Link to slides
 
 [Click here](https://docs.google.com/presentation/d/1Nof_WWcg-Tg_jncJvnNKR7JJ9GIfZ7U-kgOvqQzeKj8/edit?usp=sharing)
+ -->
+
+# Tal's Jewelry Online Shop
+
+Welcome to Tal's Jewelry, an online shop built with React, Redux, Joi, Hooks, MongoDB, and Material-UI (MUI). This platform allows users to browse and purchase jewelry items, save their favorite pieces, edit their profiles, and enables business and admin users to manage cards, jewelry inventory, and user accounts.
+
+## Features
+
+### User Features
+
+1. **User Authentication**: Users can create accounts and log in securely to access their personalized shopping experience.
+
+2. **Browse Jewelry**: Users can view a wide selection of jewelry items, complete with detailed descriptions and images.
+
+3. **Favorite Jewelry**: Users can mark their favorite jewelry items and view them in a dedicated "Favorites" page.
+
+4. **Edit Profile**: Users can update their profile information, including their name, email, and picture.
+
+### Business User Features
+
+5. **Add Cards**: Business users have the ability to add new jewelry cards to the shop, specifying details such as name, description, price, and images.
+
+### Admin User Features
+
+6. **Manage Cards**: Admin users can add, edit, and delete jewelry cards, ensuring an up-to-date inventory.
+
+7. **Edit Users**: Admins can manage user accounts, including updating user information and roles.
+
+8. **View Inventory**: Admins can access a detailed overview of the jewelry inventory, including the number of times each item has been marked as a favorite.
+
+## Installation
+
+To run this project locally, follow these steps:
+
+1. Clone the repository:
+
+   ```
+   git clone https://github.com/your-username/tals-jewelry.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```
+   cd tals-jewelry
+   ```
+
+3. Install dependencies:
+
+   ```
+   npm install
+   ```
+
+4. Create a `.env` file in the project root and add your MongoDB connection string:
+
+   ```
+   MONGODB_URI=your-mongodb-uri
+   ```
+
+5. Start the development server:
+
+   ```
+   npm start
+   ```
+
+The application should now be running locally on http://localhost:3000.
+
+## Usage
+
+1. **User Registration**: Register as a user to access the shopping features.
+
+2. **Browse Jewelry**: Explore the catalog, click on items to view details, and add favorites.
+
+3. **Profile Editing**: Update your profile information as needed.
+
+4. **Business Users**: For business users, navigate to the "MyCards" page to add new jewelry items.
+
+5. **Admin Users**: Admins can manage cards, users, and view inventory from the admin dashboard.
+
+## Technologies Used
+
+- React
+- Redux for state management
+- Joi for validation
+- Hooks for component logic
+- MongoDB for database storage
+- Material-UI (MUI) for the user interface
+- Jwt-decode
+
+## Contributing
+
+Contributions are welcome! If you would like to contribute to this project, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature: `git checkout -b feature-name`.
+3. Make your changes and commit them: `git commit -m "Add new feature"`.
+4. Push your changes to your forked repository: `git push origin feature-name`.
+5. Create a pull request to the main repository.
+
+## License
+
+This project is licensed under the MIT License. See the Tal's Jewelry 2023(LICENSE) file for details.
+
+## Contact
+
+If you have any questions or feedback, please contact us at Sandor_tal@yahoo.com.
+
+Thank you for using Tal's Jewelry Online Shop! We hope you enjoy your shopping experience.

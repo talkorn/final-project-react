@@ -1,15 +1,9 @@
 import React from "react";
 import NavLinkComponent from "./Navbar/NavLinkComponent";
 import ROUTES from "../routes/ROUTES";
-import AppBar from "@mui/material/AppBar";
-import Container from "@mui/material/Container";
-import Toolbar from "@mui/material/Toolbar";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-
+import PropTypes from "prop-types";
 const NavBarInventory = ({ handleCloseNavMenu }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -74,5 +68,7 @@ const NavBarInventory = ({ handleCloseNavMenu }) => {
     </div>
   );
 };
-
+NavBarInventory.Prototype = {
+  handleCloseNavMenu: PropTypes.func,
+};
 export default NavBarInventory;

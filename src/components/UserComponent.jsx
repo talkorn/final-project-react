@@ -17,11 +17,6 @@ const UserComponent = (userArr) => {
     .split(".")
     .reduce((obj, key) => obj[key], inputStates);
 
-  console.log(allowToBeEmpty);
-  console.log(descriptions);
-  console.log(inputStates);
-  console.log(inputsErrorsStates);
-
   return (
     <Fragment>
       <TextField
@@ -72,11 +67,7 @@ const UserComponent = (userArr) => {
 };
 
 UserComponent.propTypes = {
-  //description: PropTypes.string.isRequired,
-  inputStates: PropTypes.object.isRequired,
-  onChanges: PropTypes.func,
-  inputsErrorsStates: PropTypes.object,
-  required: PropTypes.bool,
+  userArr: PropTypes.array,
 };
 
 export default UserComponent;
