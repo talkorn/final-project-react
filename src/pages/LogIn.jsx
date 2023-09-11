@@ -40,7 +40,6 @@ const LogIn = () => {
         return;
       }
       const { data } = await axios.post("/users/login", inputState);
-      console.log("data.data", data);
       localStorage.setItem("token", data.token);
       toast.success("SignIn Completed");
       loggedIn();

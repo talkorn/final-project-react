@@ -6,7 +6,6 @@ const filterFunction = (data, searchParams) => {
   let filter = "";
   if (searchParams.filter) {
     filter = searchParams.filter;
-    console.log(filter);
   }
 
   let searchResult = data.filter((card) => {

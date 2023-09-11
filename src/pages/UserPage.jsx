@@ -32,7 +32,6 @@ const UserPage = () => {
         const { data } = await axios.get("users");
         if (data) {
           let userInfo = data;
-          console.log("userInfo", userInfo);
           userInfo = userInfo.find((item) => item._id === id);
           newInputState = {
             ...userInfo,

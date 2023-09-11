@@ -63,7 +63,6 @@ const FavoritePage = () => {
   }
 
   const moveToCardPage = (id) => {
-    console.log("id", id);
     navigate(`/card/${id}`);
   };
   const moveToEditPage = (id) => {
@@ -88,9 +87,7 @@ const FavoritePage = () => {
   };
   const deleteCardFromInitialCardsArr = async (id) => {
     try {
-      console.log("id", id);
       setCardsArr((cardsArr) => cardsArr.filter((item) => item._id !== id));
-      console.log("cardsArr", cardsArr);
       await axios.delete("cards/" + id);
     } catch (err) {
       console.log("error when deleting", err.response.data);

@@ -73,7 +73,6 @@ const InventoryManagement = () => {
     });
     setSortedData(newDataCard);
     setIntialCardData(updatedCard);
-    console.log("Updated newDataCard:", newDataCard);
     setInitialData(newDataCard);
   };
 

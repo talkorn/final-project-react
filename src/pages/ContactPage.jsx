@@ -47,8 +47,7 @@ const ContactForm = () => {
         },
         body: JSON.stringify(formData),
       });
-      const data = await response.json();
-      console.log(data);
+      await response.json();
       toast.success("Thank you for your message");
       navigate(ROUTES.HOME);
     } catch (error) {
