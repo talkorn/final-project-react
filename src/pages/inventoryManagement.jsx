@@ -5,6 +5,8 @@ import { Alert } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import validateEditCardSchema from "../validation/cardValidation";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const InventoryManagement = () => {
   const [editedUserId, setEditedUserId] = useState(null);
@@ -103,9 +105,11 @@ const InventoryManagement = () => {
         }
       });
       setSortedData(sorted);
+      toast.success("changes has been saved");
       setButtonValid(false);
     } catch (err) {
       console.log(err);
+      toast.error("cannot save the changes");
     }
   };
   return (

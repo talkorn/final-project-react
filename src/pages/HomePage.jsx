@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import CardComponent from "../components/CardComponents";
 import { useNavigate } from "react-router-dom";

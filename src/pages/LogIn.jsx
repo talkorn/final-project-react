@@ -72,7 +72,6 @@ const LogIn = () => {
     try {
       let sendEmail = {};
       sendEmail.email = email;
-     
 
       await axios.post(
         "http://localhost:8181/api/changePassword/forgot-password",
@@ -84,7 +83,6 @@ const LogIn = () => {
       console.log(err);
       toast.error(err.response ? err.response.data : "An error occurred.");
     }
-    // Comment section
   };
 
   return (

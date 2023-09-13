@@ -40,9 +40,6 @@ const CrmTable = () => {
 
   useEffect(() => {
     const updatedUser = JSON.parse(JSON.stringify(initialuserData));
-    if (updatedUser && updatedUser.isAdmin) {
-      return;
-    }
 
     if (updatedUser) {
       delete updatedUser.createdAt;
@@ -54,7 +51,7 @@ const CrmTable = () => {
     }
     const joiResponse = validateProfileSchema(updatedUser);
     setInputsErrorsState(joiResponse);
-  
+
     if (
       !joiResponse &&
       updatedUser.email &&
@@ -66,7 +63,7 @@ const CrmTable = () => {
     } else {
       setButtonValid(false);
     }
-  }, [initialuserData]);
+  }, [initialuserData, initialData]);
   const openUserCard = (id) => {
     navigate(`/user/${id}`);
   };
@@ -108,10 +105,11 @@ const CrmTable = () => {
       const [nestedProperty, nestedKey] = property.split(".");
       updatedUser[nestedProperty][nestedKey] = value;
     } else if (property === "isAdmin") {
-      updatedUser[property] = !updatedUser[property];
+      updatedUser.isAdmin = !updatedUser.isAdmin;
     } else {
       updatedUser[property] = value;
     }
+
     setIntialUserData(updatedUser);
     const newDataUser = newInitialData.map((user) => {
       if (user._id === id) {
