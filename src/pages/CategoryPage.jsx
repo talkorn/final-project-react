@@ -137,7 +137,7 @@ const CategoryPage = () => {
           onChangeCardsToTable={() => changeCardsToTable()}
         />
       </Box>
-      <Grid container spacing={2}>
+      <Grid container spacing={0.3}>
         {cardsArr &&
           cardsArr
             .filter((item) => item.category === currentCategory)
@@ -169,7 +169,7 @@ const CategoryPage = () => {
           cardsArr
             .filter((item) => item.category === currentCategory)
             .map((item) => (
-              <Grid item xs={12} sm={6} md={4} key={item._id}>
+              <Grid item xs={12} sm={6} md={3} key={item._id}>
                 {ShowCards || (!ShowCards && TabletSize) ? (
                   <CardComponent
                     likes={item.likes}

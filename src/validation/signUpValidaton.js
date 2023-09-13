@@ -9,6 +9,8 @@ const signUpSchema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required(),
+  resetToken: Joi.string().min(2),
+  resetTokenExpiration: Joi.date(),
   password: Joi.string()
     .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z]).{0,}$"))
     .min(6)

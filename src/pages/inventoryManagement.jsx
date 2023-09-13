@@ -83,7 +83,7 @@ const InventoryManagement = () => {
         return;
       }
       const cardUpdate = JSON.parse(JSON.stringify(initialCardData));
-      console.log(cardUpdate);
+
       if (cardUpdate) {
         delete cardUpdate.likes;
         delete cardUpdate.zipCode;

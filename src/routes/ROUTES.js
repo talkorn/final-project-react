@@ -14,5 +14,6 @@ const ROUTES = {
   CATEGORY: "/category",
   FAVMANG: "/FavoriteManagement",
   INVENTORY: "/InventoryManagement",
+  PASSWORDCHANGE: "ResetPasswordForm",
 };
 export default ROUTES;

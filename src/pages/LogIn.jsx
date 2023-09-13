@@ -18,8 +18,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Stack from "@mui/material/Stack";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { Link } from "react-router-dom";
+import PasswordResetPopup from "../components/PasswordResetPopup";
 const LogIn = () => {
   const loggedIn = useLoggedIn();
+  const [isPasswordResetPopupOpen, setPasswordResetPopupOpen] = useState(false);
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const navigate = useNavigate();
   const [inputState, setInputState] = useState({ email: "", password: "" });
@@ -61,6 +64,29 @@ const LogIn = () => {
   const resetButton = () => {
     setInputState({ email: "", password: "" });
   };
+  const handleForgotPasswordClick = () => {
+    setPasswordResetPopupOpen(true);
+  };
+
+  const handlePasswordReset = async (email) => {
+    try {
+      let sendEmail = {};
+      sendEmail.email = email;
+     
+
+      await axios.post(
+        "http://localhost:8181/api/changePassword/forgot-password",
+        sendEmail
+      );
+      toast.success("Email has been sent to your acount");
+      setPasswordResetPopupOpen(false);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response ? err.response.data : "An error occurred.");
+    }
+    // Comment section
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -138,6 +164,15 @@ const LogIn = () => {
               <RestartAltIcon />
             </Button>
           </Stack>
+          <Link to="#" onClick={handleForgotPasswordClick}>
+            Forgot Password
+          </Link>
+
+          <PasswordResetPopup
+            isOpen={isPasswordResetPopupOpen}
+            onClose={() => setPasswordResetPopupOpen(false)}
+            onResetPassword={handlePasswordReset}
+          />
           <Button
             disabled={!buttonValid}
             type="submit"

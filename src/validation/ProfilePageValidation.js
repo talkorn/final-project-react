@@ -7,7 +7,8 @@ const profileSchema = Joi.object({
     middle: Joi.string().min(2).max(256).allow(""),
     last: Joi.string().min(2).max(256).required(),
   }),
-
+  resetToken: Joi.string().min(2),
+  resetTokenExpiration: Joi.date(),
   phone: Joi.string().min(9).max(14).required(),
   email: Joi.string()
     .email({ tlds: { allow: false } })

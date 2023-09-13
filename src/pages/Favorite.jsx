@@ -88,6 +88,7 @@ const FavoritePage = () => {
   const deleteCardFromInitialCardsArr = async (id) => {
     try {
       setCardsArr((cardsArr) => cardsArr.filter((item) => item._id !== id));
+
       await axios.delete("cards/" + id);
     } catch (err) {
       console.log("error when deleting", err.response.data);

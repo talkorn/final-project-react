@@ -112,7 +112,6 @@ const MyCardsPage = () => {
         onChangeTableToCards={() => changeTableToCards()}
         onChangeCardsToTable={() => changeCardsToTable()}
       />
-
       <Box
         sx={{
           flexGrow: 1,
@@ -135,62 +134,61 @@ const MyCardsPage = () => {
           />
         </Button>
       </Box>
-      <Grid container spacing={2}>
-        {cardsArr.map((item) => (
-          <Grid item xs={12} key={item._id + Date.now()}>
-            {ShowTable && !TabletSize && (
-              <TableComponent
-                likes={item.likes}
-                idUser={idUser}
-                onClick={moveToCardPage}
-                id={item._id}
-                title={item.title}
-                description={item.description}
-                price={item.price}
-                stock={item.stock}
-                category={item.category}
-                color={item.colors}
-                img={item.image.url}
-                onEdit={moveToEditPage}
-                onDelete={deleteCardFromInitialCardsArr}
-                onFavorites={addToFavorite}
-                canEdit={payload && payload.isAdmin}
-                canDelete={payload && payload.isAdmin}
-                canUser={payload && payload._id}
-                cardIdUser={item.user_id}
-              />
-            )}
-          </Grid>
-        ))}
+      <Grid container spacing={0.3}>
         {cardsArr &&
-          cardsArr
-            .filter((item) => item.likes.includes(idUser))
-            .map((item) => (
-              <Grid item xs={12} sm={6} md={3} key={item._id + Date.now()}>
-                {ShowCards || (!ShowCards && TabletSize) ? (
-                  <CardComponent
-                    likes={item.likes}
-                    idUser={idUser}
-                    onClick={moveToCardPage}
-                    id={item._id}
-                    title={item.title}
-                    description={item.description}
-                    price={item.price}
-                    stock={item.stock}
-                    category={item.category}
-                    colors={item.colors}
-                    img={item.image.url}
-                    onEdit={moveToEditPage}
-                    onDelete={deleteCardFromInitialCardsArr}
-                    onFavorites={addToFavorite}
-                    canEdit={payload && payload.isAdmin}
-                    canDelete={payload && payload.isAdmin}
-                    canUser={payload && payload._id}
-                    cardIdUser={item.user_id}
-                  />
-                ) : null}
-              </Grid>
-            ))}
+          cardsArr.map((item) => (
+            <Grid item xs={12} key={item._id + Date.now()}>
+              {ShowTable && !TabletSize && (
+                <TableComponent
+                  likes={item.likes}
+                  idUser={idUser}
+                  onClick={moveToCardPage}
+                  id={item._id}
+                  title={item.title}
+                  description={item.description}
+                  price={item.price}
+                  stock={item.stock}
+                  category={item.category}
+                  color={item.colors}
+                  img={item.image.url}
+                  onEdit={moveToEditPage}
+                  onDelete={deleteCardFromInitialCardsArr}
+                  onFavorites={addToFavorite}
+                  canEdit={payload && payload.isAdmin}
+                  canDelete={payload && payload.isAdmin}
+                  canUser={payload && payload._id}
+                  cardIdUser={item.user_id}
+                />
+              )}
+            </Grid>
+          ))}
+        {cardsArr &&
+          cardsArr.map((item) => (
+            <Grid item xs={12} sm={6} md={3} key={item._id + Date.now()}>
+              {ShowCards || (!ShowCards && TabletSize) ? (
+                <CardComponent
+                  likes={item.likes}
+                  idUser={idUser}
+                  onClick={moveToCardPage}
+                  id={item._id}
+                  title={item.title}
+                  description={item.description}
+                  price={item.price}
+                  stock={item.stock}
+                  category={item.category}
+                  colors={item.colors}
+                  img={item.image.url}
+                  onEdit={moveToEditPage}
+                  onDelete={deleteCardFromInitialCardsArr}
+                  onFavorites={addToFavorite}
+                  canEdit={payload && payload.isAdmin}
+                  canDelete={payload && payload.isAdmin}
+                  canUser={payload && payload._id}
+                  cardIdUser={item.user_id}
+                />
+              ) : null}
+            </Grid>
+          ))}
       </Grid>
     </Box>
   );

@@ -19,6 +19,7 @@ import ContactPage from "../pages/ContactPage";
 import CategoryPage from "../pages/CategoryPage";
 import FavoriteManagement from "../pages/FavoriteManagement";
 import InventoryManagement from "../pages/inventoryManagement";
+import ResetPasswordForm from "../pages/ResetPasswordPage";
 const Router = () => {
   return (
     <Container maxWidth="xl">
@@ -27,6 +28,7 @@ const Router = () => {
         <Route path={ROUTES.ABOUT} element={<AboutPage />} />
         <Route path={ROUTES.CATEGORY} element={<CategoryPage />} />
         <Route path={ROUTES.SIGNUP} element={<SignUpPage />} />
+        <Route path={ROUTES.PASSWORDCHANGE} element={<ResetPasswordForm />} />
         <Route path="/card/:id" element={<CardPage />} />
         <Route
           path={ROUTES.FAVCARDS}

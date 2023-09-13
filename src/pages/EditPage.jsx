@@ -61,7 +61,7 @@ const CardPage = () => {
   useEffect(() => {
     const joiResponse = validateEditCardSchema(inputState);
     setInputsErrorsState(joiResponse);
-    console.log("joiResponse", joiResponse);
+
     if (
       inputState &&
       !joiResponse &&

@@ -59,7 +59,6 @@ const SearchFromNav = () => {
   };
   const searchSubmit = (value) => {
     const pathname = location.pathname;
-    console.log("pathname", pathname);
     navigate(`${pathname}?filter=${value}`);
   };
   return (

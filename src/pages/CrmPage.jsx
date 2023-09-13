@@ -25,6 +25,7 @@ const CrmTable = () => {
   const [buttonValid, setButtonValid] = useState(false);
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     (async () => {
       try {
@@ -42,6 +43,7 @@ const CrmTable = () => {
     if (updatedUser && updatedUser.isAdmin) {
       return;
     }
+
     if (updatedUser) {
       delete updatedUser.createdAt;
       delete updatedUser.__v;
@@ -52,7 +54,7 @@ const CrmTable = () => {
     }
     const joiResponse = validateProfileSchema(updatedUser);
     setInputsErrorsState(joiResponse);
-
+  
     if (
       !joiResponse &&
       updatedUser.email &&
@@ -147,7 +149,11 @@ const CrmTable = () => {
   return (
     <Box>
       <h1 style={{ fontFamily: "Pangolin" }}>User information</h1>
-      <h3> you can updeted the user info</h3>
+      <h3>
+        {" "}
+        you can updeted the user info. For more details about a user click on
+        his Id
+      </h3>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <div style={{ overflowX: "auto" }}>
